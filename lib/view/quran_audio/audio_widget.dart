@@ -17,23 +17,19 @@ class AudioWidget extends StatelessWidget {
         Navigator.push(context, MaterialPageRoute(builder: (context) => AudioSurahScreen(surahModel: surahModel,),));
       },
       child: Container(
-        padding: EdgeInsetsDirectional.all(20.sp),
+        padding: EdgeInsetsDirectional.all(10.sp),
         decoration: BoxDecoration(
-          color: Colors.teal[900],
+          color: Colors.brown[600],
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(surahModel["surahNameArabic"],style: TextStyle(color: Colors.white,
-                fontSize: 50.sp,fontWeight: FontWeight.bold),),
-                Icon(Icons.headphones_rounded,color: Colors.white,),
-              ],
-            ),
-            
+            //Icon(Icons.multitrack_audio_outlined,color: Colors.white,),
+            Image.asset('assets/images/headphone.png',width: 100.w,height: 100.w,fit: BoxFit.cover,),
+            Text('سورة ${surahModel["surahNameArabic"]}',style: TextStyle(color: Colors.white,
+            fontSize: 50.sp,fontWeight: FontWeight.bold),),
           ],
         ),
       ),

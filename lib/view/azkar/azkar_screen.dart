@@ -42,7 +42,7 @@ class AzkarScreen extends StatelessWidget {
         body: ListView.separated(
               padding: EdgeInsetsDirectional.all(20.sp),
               itemBuilder: (context, index) {
-                return AzkarWidget(azkarMap: AzkarCubit.get(context).getAzkarList(azkarIndex)[index],);
+                return AzkarWidget(azkarMap: AzkarCubit.get(context).getAzkarList(azkarIndex)[index],index: index,);
               },
               separatorBuilder: (context, index) {
                 return SizedBox(height: 20.h,);

@@ -27,3 +27,9 @@ class GetSurahErrorState extends QuranState{}
 
 class GetNextPageSuccessState extends QuranState{}
 class GetPreviousPageSuccessState extends QuranState{}
+
+class SearchSurahLoadingState extends QuranState{}
+class SearchSurahSuccessState extends QuranState{}
+
+class SearchAudioLoadingState extends QuranState{}
+class SearchAudioSuccessState extends QuranState{}

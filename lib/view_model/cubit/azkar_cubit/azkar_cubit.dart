@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafeek_eldarb/model/azkar_model.dart';
 import 'azkar_state.dart';
 
 class AzkarCubit extends Cubit<AzkarState>{
@@ -957,6 +958,98 @@ List<Widget> azkarIcon = [
   Image.asset('assets/images/quranIcon2.png',width: 100.w,height: 100.h,fit: BoxFit.cover,),
   Image.asset('assets/images/praying2.png',width: 100.w,height: 100.h,fit: BoxFit.cover,),
 ];
+
+
+//bookmarked list
+List<Map<String,dynamic>> azkarBookmarkList = [
+  {
+    "category": "أذكار الصباح",
+    "count": "1",
+    "description": "من قالها موقنا بها حين يمسى ومات من ليلته دخل الجنة وكذلك حين يصبح.",
+    "reference": "",
+    "content": "اللّهـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ ، خَلَقْتَنـي وَأَنا عَبْـدُك ، وَأَنا عَلـى عَهْـدِكَ وَوَعْـدِكَ ما اسْتَـطَعْـت ، أَعـوذُبِكَ مِنْ شَـرِّ ما صَنَـعْت ، أَبـوءُ لَـكَ بِنِعْـمَتِـكَ عَلَـيَّ وَأَبـوءُ بِذَنْـبي فَاغْفـِرْ لي فَإِنَّـهُ لا يَغْـفِرُ الذُّنـوبَ إِلاّ أَنْتَ ."
+  },
+  {
+    "category": "أذكار الصباح",
+    "count": "3",
+    "description": "من قالها حين يصبح وحين يمسى كان حقا على الله أن يرضيه يوم القيامة.",
+    "reference": "",
+    "content": "رَضيـتُ بِاللهِ رَبَّـاً وَبِالإسْلامِ ديـناً وَبِمُحَـمَّدٍ صلى الله عليه وسلم نَبِيّـاً. "
+  },
+  {
+    "category": "أذكار الصباح",
+    "count": "4",
+    "description": "من قالها أعتقه الله من النار.",
+    "reference": "",
+    "content": "اللّهُـمَّ إِنِّـي أَصْبَـحْتُ أُشْـهِدُك ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـك ، وَمَلَائِكَتَكَ ، وَجَمـيعَ خَلْـقِك ، أَنَّـكَ أَنْـتَ اللهُ لا إلهَ إلاّ أَنْـتَ وَحْـدَكَ لا شَريكَ لَـك ، وَأَنَّ ُ مُحَمّـداً عَبْـدُكَ وَرَسـولُـك."
+  },
+  {
+    "category": "أذكار الصباح",
+    "count": "7",
+    "description": "من قالها كفاه الله ما أهمه من أمر الدنيا والأخرة.",
+    "reference": "",
+    "content": "حَسْبِـيَ اللّهُ لا إلهَ إلاّ هُوَ عَلَـيهِ تَوَكَّـلتُ وَهُوَ رَبُّ العَرْشِ العَظـيم."
+  },
+  {
+    "category": "أذكار الصباح",
+    "count": "3",
+    "description": "لم يضره من الله شيء.",
+    "reference": "",
+    "content": "بِسـمِ اللهِ الذي لا يَضُـرُّ مَعَ اسمِـهِ شَيءٌ في الأرْضِ وَلا في السّمـاءِ وَهـوَ السّمـيعُ العَلـيم."
+  },
+  {
+    "category": "أذكار الصباح",
+    "count": "3",
+    "description": "",
+    "reference": "",
+    "content": "يَا حَيُّ يَا قيُّومُ بِرَحْمَتِكَ أسْتَغِيثُ أصْلِحْ لِي شَأنِي كُلَّهُ وَلاَ تَكِلْنِي إلَى نَفْسِي طَـرْفَةَ عَيْنٍ."
+  },
+  {
+    "category": "أذكار الصباح",
+    "count": "10",
+    "description": "من صلى على حين يصبح وحين يمسى ادركته شفاعتى يوم القيامة.",
+    "reference": "",
+    "content": "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ على نَبِيِّنَا مُحمَّد."
+  },
+];
+
+// void addBookmarkItem(Map<String,dynamic> zkr,int index){
+//   AzkarModel zkrModel = AzkarModel(
+//   content: zkr["content"],description: zkr["description"],
+//     category: zkr["category"],count: zkr["count"],
+//   id: index,isBookmarked: true);
+//   emit(AddBookmarkItemLoadingState());
+//   azkarBookmarkList.add(zkrModel);
+//   emit(AddBookmarkItemSuccessState());
+// }
+//
+// bool isSaved(int index,Map<String,dynamic> zkr){
+//   for(var i in azkarBookmarkList) {
+//     if (i.category == zkr["category"] && index == i.id) {
+//       return true;
+//     }
+//   }
+//   return false;
+// }
+//
+//   void removeBookmarkItem(Map<String,dynamic> zkr,int index){
+//     emit(RemoveBookmarkItemLoadingState());
+//     azkarBookmarkList.removeWhere((element) => element.category == zkr["category"] && element.id == index,);
+//     emit(RemoveBookmarkItemSuccessState());
+//   }
+//
+//   void toggle(Map<String,dynamic> zkr,int index){
+//     if(isSaved(index, zkr)){
+//       removeBookmarkItem(zkr, index);
+//     }else{
+//       addBookmarkItem(zkr, index);
+//     }
+//   }
+//
+//   void deleteFromList(int index){
+//     azkarBookmarkList.removeAt(index);
+//     emit(DeleteFromListState());
+//   }
 
 
 }

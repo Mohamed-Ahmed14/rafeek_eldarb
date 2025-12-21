@@ -12,7 +12,7 @@ class VerseWidget extends StatelessWidget {
       margin: EdgeInsetsDirectional.all(15.sp),
       padding: EdgeInsetsDirectional.all(15.sp),
       decoration: BoxDecoration(
-        color: Colors.white30,
+        color: Colors.white12,
       ),
       child: Text(verseText,style: TextStyle(
         fontSize: QuranCubit.get(context).sliderValue.sp,

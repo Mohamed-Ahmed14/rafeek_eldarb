@@ -27,14 +27,12 @@ class _MushafScreenState extends State<MushafScreen> {
   void initState() {
     // TODO: implement initState
     pageController = PageController(initialPage: widget.pageIndex-1);
-
     if(QuranCubit.get(context).isSingleLine){
       QuranCubit.get(context).getPageDetails(widget.pageIndex);
     }else{
       QuranCubit.get(context).getQuranPage(widget.pageIndex);
     }
-
-
+    QuranCubit.get(context).isVisible = false;
     super.initState();
   }
   @override
@@ -50,23 +48,26 @@ class _MushafScreenState extends State<MushafScreen> {
                   cubit.changeAppBarStatus();
                 },
                 child: Scaffold(
-                  backgroundColor: AppColor.backgroundColor,
+                  backgroundColor: Colors.brown[100],
                   appBar: !cubit.isVisible ?
                   AppBar(
-                    backgroundColor: AppColor.backgroundColor,
+                    backgroundColor: Colors.brown[100],
                     elevation: 0.8,
                     toolbarHeight: 100.h,
+                    leadingWidth: 200.w,
                     leading: Text('  ${cubit.getSurahName(cubit.pageIndex)}',style: TextStyle(
                         fontSize: 40.sp,fontWeight: FontWeight.w700,height: 8.h
                     ),),
                     actions: [
                       Text("الجزء ${cubit.convertToArabicNumbers(
-                          cubit.getJuzNumberEnglish().toString())}  ",),
+                          cubit.getJuzNumberEnglish().toString())}  ",style: TextStyle(
+                        fontSize: 40.sp,fontWeight: FontWeight.w700
+                      ),),
                       SizedBox(width: 10.w,),
                     ],
                   ):
                   AppBar(
-                    backgroundColor: AppColor.backgroundColor,
+                    backgroundColor: Colors.brown[100],
                     elevation: 1,
                     toolbarHeight: 100.h,
                     leading: IconButton(onPressed:(){
@@ -74,16 +75,18 @@ class _MushafScreenState extends State<MushafScreen> {
                     },
                       icon: Icon(Icons.arrow_back_ios_rounded,size: 60.sp,),color: Colors.teal,),
                     actions: [
-                      IconButton(onPressed:(){
+                      IconButton(onPressed:() {
                         cubit.changeTextMode();
-                        if(SharedHelper.get(key: SharedKeys.singleMode)){
+                        if(QuranCubit.get(context).isSingleLine){
                           QuranCubit.get(context).getPageDetails(cubit.pageIndex);
+
                         }else{
                           QuranCubit.get(context).getQuranPage(cubit.pageIndex);
+
                         }
                       },
                           icon: Icon(Icons.wrap_text_rounded,
-                            color: cubit.isSingleLine ? Colors.teal : Colors.black,)),
+                            color: cubit.isSingleLine ? Colors.teal : Colors.brown[700],)),
                       SizedBox(width: 10.w,),
                     ],
                   ),

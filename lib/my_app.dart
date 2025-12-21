@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/settings_cubit/settings_cubit.dart';
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   @override
@@ -35,6 +37,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: context.supportedLocales,
               locale: context.locale,
             debugShowCheckedModeBanner: false,
+            title: 'رفيق الدرب',
             // theme: ThemeData(
             //   textTheme: GoogleFonts.amiriTextTheme(),
             // ),

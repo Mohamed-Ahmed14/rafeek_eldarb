@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:rafeek_eldarb/model/mushaf_model.dart';
 import 'package:rafeek_eldarb/model/quran_surahs_model.dart';
 import 'package:rafeek_eldarb/model/surah_model.dart';
@@ -81,11 +82,14 @@ class QuranCubit extends Cubit<QuranState>{
     emit(ChangeAppBarState());
   }
 
+
   //change text mode
   bool isSingleLine = true;
+
   void changeTextMode() async{
     isSingleLine = !isSingleLine;
     await SharedHelper.set(key: SharedKeys.singleMode, value: isSingleLine);
+    //print("Test $isSingleLine");
     emit(ChangeTextModeState());
   }
 
@@ -198,6 +202,7 @@ class QuranCubit extends Cubit<QuranState>{
 
   List<Map<String,dynamic>> surahsNameAndAyah = [];
 
+
   Future<void> getSurahsNames() async{
     surahsNameAndAyah.clear();
     emit(GetQuranSurahsLoadingState());
@@ -231,5 +236,43 @@ class QuranCubit extends Cubit<QuranState>{
      return quran.getVerseCount(surahNumber);
   }
 
+//Search Surah Name
+  TextEditingController searchSurahController = TextEditingController();
+  List<Map<String,dynamic>> searchSurahList = [];
+  FocusNode searchSurahNode = FocusNode();
+  void searchSurah(String value){
+    searchSurahList.clear();
+      emit(SearchSurahLoadingState());
+      for(var i in surahsNameAndAyah){
+        if((i["surahNameArabic"]).toString().trim().contains(value.trim())){
+            searchSurahList.add(i);
+        }
+      }
+      emit(SearchSurahSuccessState());
+  }
+  //Search Surah Audio
+  TextEditingController searchAudioController = TextEditingController();
+  List<Map<String,dynamic>> searchAudioList = [];
+  FocusNode searchAudioNode = FocusNode();
+  void searchAudio(String value){
+    searchAudioList.clear();
+    emit(SearchAudioLoadingState());
+    for(var i in surahsNameAndAyah){
+      if((i["surahNameArabic"]).toString().trim().contains(value.trim())){
+        searchAudioList.add(i);
+      }
+    }
+    emit(SearchAudioSuccessState());
+  }
 
+  //check for update
+  void checkForUpdate() async {
+    final updateInfo = await InAppUpdate.checkForUpdate();
+    if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+      if (updateInfo.immediateUpdateAllowed) {
+        // Force update immediately
+        await InAppUpdate.performImmediateUpdate();
+      }
+    }
+  }
 }

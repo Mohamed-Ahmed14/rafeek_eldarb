@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quran/quran.dart';
 import 'package:rafeek_eldarb/view/mushaf/mushaf_screen.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 
@@ -19,6 +20,7 @@ class SurahsWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         onTap: () {
           //QuranCubit.get(context).pageNumber = surahModel["surahNumber"];
+          //print(getAudioURLBySurah(1));
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => MushafScreen(
                 pageIndex: QuranCubit.get(context).getSurahPageNumber(surahModel["surahNumber"]),),));

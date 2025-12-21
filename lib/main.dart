@@ -1,21 +1,27 @@
 
-
-
+import 'package:audio_service/audio_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+
 import 'package:rafeek_eldarb/my_app.dart';
 import 'package:rafeek_eldarb/view_model/data/local/shared_helper.dart';
-import 'package:rafeek_eldarb/view_model/data/local/shared_keys.dart';
+
 import 'package:rafeek_eldarb/view_model/data/network/dio_helper.dart';
+import 'package:rafeek_eldarb/view_model/utils/audio_handler.dart';
 import 'package:rafeek_eldarb/view_model/utils/defaults.dart';
 
-void main() async{
+  AudioHandler? audioHandler;
+
+Future<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await SharedHelper.init();
   DioHelper.init();
   await Defaults.appDefaultInitialization();
+  await initAudioHandler();
+
+
 
   /// to generate keys for localization
   /// flutter pub run easy_localization:generate -S assets/translations -O lib/view_model/utils -o local_keys.g.dart -f keys
@@ -27,4 +33,19 @@ void main() async{
       saveLocale: false,
       //startLocale: Locale('ar'),
       child: MyApp()));
+}
+
+Future<void> initAudioHandler()async{
+  if(audioHandler != null){
+    audioHandler = null;
+  }
+    audioHandler  = await AudioService.init(
+      builder: () => AudioPlayerHandler(),
+      config: const AudioServiceConfig(
+        androidNotificationChannelId: 'com.ryanheise.myapp.channel.audio',
+        androidNotificationChannelName: 'Audio Playback',
+         androidNotificationIcon: 'mipmap/icon_transparent', // Request focus
+        androidNotificationOngoing: true,
+      ),
+    );
 }

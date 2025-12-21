@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quran/quran.dart';
 import 'package:rafeek_eldarb/view/mushaf/mushaf_screen.dart';
 import 'package:rafeek_eldarb/view/quran_audio/audio_surah_screen.dart';
+import 'package:rafeek_eldarb/view/settings/azkar_bookmark_widget.dart';
+import 'package:rafeek_eldarb/view_model/cubit/azkar_cubit/azkar_cubit.dart';
+import 'package:rafeek_eldarb/view_model/cubit/azkar_cubit/azkar_state.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/settings_cubit/settings_cubit.dart';
 import 'package:rafeek_eldarb/view_model/data/local/shared_helper.dart';
@@ -19,7 +22,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.brown[100],
         appBar: AppBar(
           backgroundColor: AppColor.foregroundColor,
           centerTitle: true,
@@ -29,16 +32,21 @@ class SettingsScreen extends StatelessWidget {
               Text(' بروفايل ',style: TextStyle(
                 color: Colors.white
               ),),
-              CircleAvatar(backgroundColor: Colors.white70,
-                  child: Icon(Icons.book,color: Colors.blueGrey[900],size: 100.r,)),
+              // CircleAvatar(backgroundColor: Colors.brown[100],
+              //     child: Icon(Icons.book,color: Colors.brown[900],size: 100.r,)),
               //Image.asset('assets/images/bookmarkIcon.png',height: 120.h,width: 120.h,fit: BoxFit.cover,),
             ],
           ),
+          actions: [
+            Image.asset('assets/images/dua.png'),
+            SizedBox(width: 20.w,),
+          ],
         ),
         body: BlocBuilder<SettingsCubit,SettingsState>(
           builder: (context, state) {
             return  ListView(
-              shrinkWrap: true,
+              //shrinkWrap: true,
+              //physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsetsDirectional.all(20.sp),
               children: [
                 Row(
@@ -160,6 +168,40 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                BlocBuilder<AzkarCubit,AzkarState>(
+                  builder: (context, state) {
+                    var cubit = AzkarCubit.get(context);
+                    return Column(
+                      children: [
+                        Divider(color: Colors.grey,thickness: 2.sp,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(' الأذكار ',style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 50.sp,
+                                fontWeight: FontWeight.w700
+                            ),),
+                            Image.asset('assets/images/arabic.png',
+                              width: 80.w,height: 80.h,fit: BoxFit.fill,),
+                          ],
+                        ),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return AzkarBookmarkWidget(zkrModel: cubit.azkarBookmarkList[index]);
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 10.h,);
+                          },
+                          itemCount: cubit.azkarBookmarkList.length,
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                SizedBox(height: 30.h,),
               ],
             );
           },

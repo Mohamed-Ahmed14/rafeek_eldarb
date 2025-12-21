@@ -1,9 +1,11 @@
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-
+import 'package:quran/quran.dart';
+import 'package:rafeek_eldarb/main.dart';
+import 'package:rafeek_eldarb/view_model/utils/audio_handler.dart';
 import 'audio_state.dart';
 
 class AudioCubit extends Cubit<AudioState>{
@@ -12,9 +14,12 @@ class AudioCubit extends Cubit<AudioState>{
 
   static AudioCubit get(context) =>BlocProvider.of<AudioCubit>(context);
 
+   //late AudioPlayerHandler audioHandler;
+   //AudioPlayerHandler audioPlayerHandler = AudioPlayerHandler();
 
 
-  final player = AudioPlayer();
+
+  //final player = AudioPlayer();
   int surahIndex = -1;
   bool isPause = true;
   //for slider indicating
@@ -22,31 +27,60 @@ class AudioCubit extends Cubit<AudioState>{
   Duration duration = Duration.zero; // Total duration of the audio
   Duration position = Duration.zero; // Current position of the audio
 
-void clearAudioSurah(){
-  surahIndex = -1;
-  isPause = true;
-}
+
+  bool isLoading = false;
+  Future<void> updateLoading() async{
+    isLoading = true;
+    //await Future.delayed(Duration(seconds: 3));
+    emit(UpdateAudioLoadingState());
+  }
+
 
   Future<void> audioPlay(String url,int index) async{
     emit(AudioPlayLoadingState());
-    if(surahIndex != index){
-      await player.setUrl(url);
-      duration = player.duration ?? Duration.zero;
-      surahIndex = index;
-      emit(AudioUrlSuccessState());
+    try{
+      if(surahIndex != index){
+        if((audioHandler as AudioPlayerHandler).getPlayer().playing){
+          if(audioHandler == null)return;
+          await audioHandler?.stop();
+        }
+        //await (audioHandler as AudioPlayerHandler).getPlayer().setUrl('22');
+        await (audioHandler as AudioPlayerHandler).getPlayer().setUrl(
+            "https://github.com/The-Quran-Project/Quran-Audio-Chapters/raw/refs/heads/main/Data/1/${index}.mp3");
+        duration =  ((audioHandler as AudioPlayerHandler).getPlayer().duration )??Duration.zero;
+        await setItem(url,index);
+        surahIndex = index;
+        emit(AudioUrlSuccessState());
+      }
+      isPause = false;
+      if(audioHandler == null)return;
+      isLoading = false;
+      await audioHandler?.play();
+      emit(AudioPlaySuccessState());
+    }catch(e){
+      isLoading = false;
+      emit(AudioPLayErrorState());
+      rethrow;
     }
-    isPause = false;
-    await player.play();
-    emit(AudioPlaySuccessState());
   }
 
+
+  Future<void> setItem(String url,int index) async{
+    await (audioHandler as AudioPlayerHandler).setMediaItem(
+      "",
+      "        ${getSurahNameArabic(index)}",
+      duration.inMilliseconds,
+    );
+
+  }
 
 
   Future<void> audioResume(int index) async{
     emit(AudioPauseLoadingState());
     if(index == surahIndex){
       isPause = true;
-      await player.pause();
+      if(audioHandler == null)return;
+      await audioHandler?.pause();
     }
     emit(AudioPauseSuccessState());
   }
@@ -55,7 +89,8 @@ void clearAudioSurah(){
     emit(AudioStopLoadingState());
     if(index == surahIndex)
       {
-        await player.stop();
+        if(audioHandler == null)return;
+        await audioHandler?.stop();
         isPause = true;
         surahIndex = -1;
       }
@@ -92,11 +127,10 @@ bool isPlaying(int index){
     });
   }
 
-  bool isLoading = false;
-  void updateLoading() async{
-      isLoading = true;
-      await Future.delayed(Duration(seconds: 5),() => isLoading = false,);
-      emit(UpdateAudioLoadingState());
-  }
 
+  @override
+  Future<void> close() async {
+    await (audioHandler as AudioPlayerHandler).getPlayer().dispose();
+    super.close();
+  }
 }

@@ -1,56 +1,88 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rafeek_eldarb/model/prayer_model.dart';
 import 'package:rafeek_eldarb/view_model/cubit/prayer_cubit/prayer_state.dart';
-import 'package:rafeek_eldarb/view_model/data/network/dio_helper.dart';
+
 
 class PrayerCubit extends Cubit<PrayerState>{
   PrayerCubit() : super(PrayerInitState());
   static PrayerCubit get(context)=>BlocProvider.of<PrayerCubit>(context);
 
 
-Prayer? prayer = null;
 List<Map<String,dynamic>> times = [];
-  ///Get Prayer Times
-  Future<void> getPrayerTimes() async{
+  // Prayer? prayer = null;
+  // ///Get Prayer Times
+  // Future<void> getPrayerTimes() async{
+  //   emit(GetPrayerTimesLoadingState());
+  //   await DioHelper.get(endPoint: 'getPrayerTimes',).then((value){
+  //     prayer = Prayer.fromJson(value.data);
+  //     setPrayerTimes();
+  //     emit(GetPrayerTimesSuccessState());
+  //   }).catchError((error){
+  //     emit(GetPrayerTimesErrorState());
+  //   });
+  //
+  // }
+
+   final Dio _dio =Dio(
+     BaseOptions(
+       baseUrl: 'https://api.aladhan.com/v1/timingsByCity/',
+       receiveDataWhenStatusError: true,
+     ),
+   );
+   dynamic  prayerTimesByCity = null;
+  Future<void> getPrayerTimesByCity() async{
+    //print("in $prayerTimesByCity");
+    //City is fixed now as Cairo
+    String date = DateFormat('dd-MM-yyyy').format(DateTime.now());
     emit(GetPrayerTimesLoadingState());
-    await DioHelper.get(endPoint: 'getPrayerTimes',).then((value){
-      prayer = Prayer.fromJson(value.data);
-      setPrayerTimes();
-      emit(GetPrayerTimesSuccessState());
-    }).catchError((error){
+    try{
+      var response = await _dio.get('$date?city=Cairo&country=Egypt&method=5');
+      if(response.data["code"] == 200){
+        prayerTimesByCity =  response.data["data"]["date"]["hijri"];
+       //print(prayerTimesByCity["weekday"]["ar"]);
+        Map<String,dynamic> data = response.data["data"]["timings"];
+        setPrayerTimes(prayerTimes: data);
+        if(prayerTimesByCity !=  null && times.isNotEmpty){
+          // print("out $prayerTimesByCity");
+          emit(GetPrayerTimesSuccessState());
+        }
+        //emit(GetPrayerTimesSuccessState());
+      }else{
+        emit(GetPrayerTimesErrorState());
+      }
+    }catch(e){
       emit(GetPrayerTimesErrorState());
-    });
+    }
 
   }
 
-  void setPrayerTimes(){
-    Map<String,dynamic> map;
-  if(prayer != null){
+  void setPrayerTimes({Map<String,dynamic>? prayerTimes}){
+  if(prayerTimes != null){
     times = [
       {
-        "الفجر": prayer?.prayerTimes?.fajr ?? "",
+        "الفجر": prayerTimes["Fajr"],
       },
       {
-        "الشروق": prayer?.prayerTimes?.sunrise ?? "",
+        "الشروق": prayerTimes["Sunrise"],
       },
       {
-        "الظهر": prayer?.prayerTimes?.duhr ?? "",
+        "الظهر": prayerTimes["Dhuhr"],
       },
       {
-        "العصر": prayer?.prayerTimes?.asr ?? "",
+        "العصر": prayerTimes["Asr"],
       },
       {
-        "المغرب": prayer?.prayerTimes?.maghrib ?? "",
+        "المغرب": prayerTimes["Maghrib"],
       },
       {
-        "العشاء": prayer?.prayerTimes?.isha ?? "",
+        "العشاء": prayerTimes["Isha"],
       }
     ];
   }
-    emit(GetPrayerTimesSuccessState());
+
   }
 
   bool isConnected = true;

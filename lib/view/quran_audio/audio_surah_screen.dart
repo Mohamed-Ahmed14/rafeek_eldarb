@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +11,10 @@ import 'package:rafeek_eldarb/view_model/data/local/shared_helper.dart';
 import 'package:rafeek_eldarb/view_model/data/local/shared_keys.dart';
 import 'package:rafeek_eldarb/view_model/utils/app_colors.dart';
 
+
+import '../../main.dart';
 import '../../view_model/cubit/audio_cubit/audio_cubit.dart';
+import '../../view_model/utils/audio_handler.dart';
 
 class AudioSurahScreen extends StatefulWidget {
   final Map surahModel;
@@ -24,10 +28,9 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
   @override
   void initState() {
     // TODO: implement initState
-
-
     super.initState();
-    AudioCubit.get(context).player.positionStream.listen((position) {
+    //AudioCubit.get(context).player.positionStream.listen((position) {
+    (audioHandler as AudioPlayerHandler).getPlayer().positionStream.listen((position) {
       if(mounted)
         {
           setState(() {
@@ -121,7 +124,8 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
                         value:AudioCubit.get(context).isPlaying(widget.surahModel["surahNumber"])? AudioCubit.get(context).position.inSeconds.toDouble().clamp(0,
                             AudioCubit.get(context).duration.inSeconds.toDouble()):0,
                         onChanged: (value) {
-                          AudioCubit.get(context).player.seek(Duration(seconds: value.toInt()));
+                         // AudioCubit.get(context).player.seek(Duration(seconds: value.toInt()));
+                          (audioHandler as AudioPlayerHandler).getPlayer().seek(Duration(seconds: value.toInt()));
                         },
                         thumbColor: Colors.black,
                         activeColor: Colors.black,
@@ -168,7 +172,20 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
                               Icons.stop,
                               color: Colors.red[700],size: 80.r,
                             )),
-                        BlocBuilder<AudioCubit, AudioState>(
+                        BlocConsumer<AudioCubit, AudioState>(
+                          listener: (context, state) {
+                           if(state is AudioPLayErrorState)
+                             {
+                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: SizedBox(height: 100.h,
+                                 child: Text('حدثت مشكلة يرجي الحاولة لاحقا',style: TextStyle(
+                                     color: Colors.white,
+                                     fontSize: 50.sp,
+                                     fontWeight: FontWeight.w600
+                                 ),
+                                   textAlign: TextAlign.center,),),
+                                 duration: Duration(seconds: 2),padding: EdgeInsetsDirectional.all(0),));
+                             }
+                          },
                           builder: (context, state) {
                             var cubit = AudioCubit.get(context);
                             return IconButton(
@@ -202,7 +219,8 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
                                   }
                                 },
                                 icon: StreamBuilder<bool>(
-                                  stream: cubit.player.playingStream,
+                                  //stream: cubit.player.playingStream,
+                                  stream: (audioHandler as AudioPlayerHandler).getPlayer().playingStream,
                                   builder: (context, snapshot) {
                                     if(cubit.position.inSeconds.toDouble() == cubit.duration.inSeconds.toDouble()){
                                       cubit.audioStop(getAudioURLBySurah(widget.surahModel["surahNumber"]), widget.surahModel["surahNumber"]); //return surah index -> -1 to can start again
