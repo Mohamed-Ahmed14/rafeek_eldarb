@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "196726378414",
+    "project_id": "rafeek-eldarb",
+    "storage_bucket": "rafeek-eldarb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196726378414:android:8a6fb107f55c632f68423f",
+        "android_client_info": {
+          "package_name": "com.CrowEye.rafeek_eldarb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrStRPzWIOM976d429SU6TwaikIrpMfZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

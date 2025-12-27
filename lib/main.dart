@@ -9,6 +9,8 @@ import 'package:rafeek_eldarb/view_model/data/local/shared_helper.dart';
 import 'package:rafeek_eldarb/view_model/data/network/dio_helper.dart';
 import 'package:rafeek_eldarb/view_model/utils/audio_handler.dart';
 import 'package:rafeek_eldarb/view_model/utils/defaults.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
   AudioHandler? audioHandler;
 
@@ -16,10 +18,14 @@ Future<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await SharedHelper.init();
   DioHelper.init();
   await Defaults.appDefaultInitialization();
-  await initAudioHandler();
+  //comment that line when debug with emulator
+ // await initAudioHandler();
 
 
 

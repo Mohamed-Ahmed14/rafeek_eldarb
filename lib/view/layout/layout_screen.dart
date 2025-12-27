@@ -7,6 +7,7 @@ import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_state.dart';
 
 
 class LayoutScreen extends StatefulWidget {
+
   const LayoutScreen({super.key});
 
   @override
@@ -18,7 +19,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    QuranCubit.get(context).checkForUpdate();
+    //comment that line when debug with emulator
+    //QuranCubit.get(context).checkForUpdate();
   }
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
         var cubit = QuranCubit.get(context);
         return Scaffold(
         body: cubit.screens[cubit.screenIndex],
-
           bottomNavigationBar: ConvexAppBar(
               items: [
                 TabItem(icon: Image.asset('assets/images/dua.png'),title: ' بروفايل '),
@@ -36,14 +37,13 @@ class _LayoutScreenState extends State<LayoutScreen> {
                 TabItem(icon: Image.asset('assets/images/audio5.png'),title: ' إستماع ',),
                 TabItem(icon: Image.asset('assets/images/calendar.png'),title: ' الصلاة ',),
               ],
-            initialActiveIndex: 2,
+            initialActiveIndex: cubit.screenIndex,
             backgroundColor: Colors.brown[100],
             activeColor:Colors.teal[900],
             color: Colors.black,
             style: TabStyle.react,
             height: 140.h,
             curveSize: 80,
-
             onTap: (index) {
               cubit.updateScreenIndex(index);
             },

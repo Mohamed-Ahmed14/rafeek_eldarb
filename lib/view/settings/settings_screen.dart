@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quran/quran.dart';
 import 'package:rafeek_eldarb/view/mushaf/mushaf_screen.dart';
 import 'package:rafeek_eldarb/view/quran_audio/audio_surah_screen.dart';
@@ -14,6 +16,7 @@ import 'package:rafeek_eldarb/view_model/data/local/shared_keys.dart';
 import 'package:rafeek_eldarb/view_model/utils/app_colors.dart';
 
 import '../../view_model/cubit/settings_cubit/settings_state.dart';
+import '../challenges/challenge_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -44,6 +47,7 @@ class SettingsScreen extends StatelessWidget {
         ),
         body: BlocBuilder<SettingsCubit,SettingsState>(
           builder: (context, state) {
+            var cubit = SettingsCubit.get(context);
             return  ListView(
               //shrinkWrap: true,
               //physics: NeverScrollableScrollPhysics(),
@@ -60,6 +64,7 @@ class SettingsScreen extends StatelessWidget {
                     Image.asset('assets/images/holy-quran.png',width: 80.w,height: 80.h,fit: BoxFit.cover,),
                   ],
                 ),
+                SizedBox(height: 10.h,),
                 Material(
                   color: AppColor.foregroundColor,
                   borderRadius: BorderRadius.circular(12.r),
@@ -122,7 +127,7 @@ class SettingsScreen extends StatelessWidget {
                         fontSize: 50.sp,
                         fontWeight: FontWeight.w700
                     ),),
-                    Image.asset('assets/images/headphone.png',
+                    Image.asset('assets/images/headphones.png',
                       width: 80.w,height: 80.h,fit: BoxFit.fill,),
                   ],
                 ),
@@ -168,40 +173,155 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                BlocBuilder<AzkarCubit,AzkarState>(
-                  builder: (context, state) {
-                    var cubit = AzkarCubit.get(context);
-                    return Column(
+                // Text("${cubit.isUserSignedIn()}"),
+                // ElevatedButton(onPressed: (){
+                //   cubit.signInAnonymously();
+                // },
+                //     child: Text('Anonymous Sign In')),
+                // BlocBuilder<AzkarCubit,AzkarState>(
+                //   builder: (context, state) {
+                //     var cubit = AzkarCubit.get(context);
+                //     return Column(
+                //       children: [
+                //         Divider(color: Colors.grey,thickness: 2.sp,),
+                //         Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Text(' الأذكار ',style: TextStyle(
+                //                 color: Colors.black,
+                //                 fontSize: 50.sp,
+                //                 fontWeight: FontWeight.w700
+                //             ),),
+                //             Image.asset('assets/images/arabic.png',
+                //               width: 80.w,height: 80.h,fit: BoxFit.fill,),
+                //           ],
+                //         ),
+                //         ListView.separated(
+                //           shrinkWrap: true,
+                //           physics: NeverScrollableScrollPhysics(),
+                //           itemBuilder: (context, index) {
+                //             return AzkarBookmarkWidget(zkrModel: cubit.azkarBookmarkList[index]);
+                //           },
+                //           separatorBuilder: (context, index) {
+                //             return SizedBox(height: 10.h,);
+                //           },
+                //           itemCount: cubit.azkarBookmarkList.length,
+                //         ),
+                //       ],
+                //     );
+                //   },
+                // ),
+                Divider(color: Colors.grey,thickness: 2.sp,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(' الإشعارات ',style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 50.sp,
+                        fontWeight: FontWeight.w700
+                    ),),
+                    //Icon(Icons.notifications_on,color: AppColor.foregroundColor,),
+                    Image.asset('assets/images/notification.png',
+                      width: 80.w,height: 80.h,fit: BoxFit.cover,),
+                  ],
+                ),
+                SizedBox(height: 10.h,),
+                Material(
+                  borderRadius: BorderRadius.circular(20.r),
+                  color: AppColor.foregroundColor,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(20.r),
+                    onTap: (){
+                      ///Switch Notification on/off
+                    },
+                    child: Container(
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w,vertical: 20.h),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                        // image: DecorationImage(image: AssetImage('assets/images/banner.png'),fit: BoxFit.cover),
+                      ),child:Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Divider(color: Colors.grey,thickness: 2.sp,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(' الأذكار ',style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 50.sp,
-                                fontWeight: FontWeight.w700
+                            Text(' مفعل ',style: TextStyle(
+                                color: AppColor.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 60.sp
                             ),),
-                            Image.asset('assets/images/arabic.png',
-                              width: 80.w,height: 80.h,fit: BoxFit.fill,),
                           ],
                         ),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return AzkarBookmarkWidget(zkrModel: cubit.azkarBookmarkList[index]);
-                          },
-                          separatorBuilder: (context, index) {
-                            return SizedBox(height: 10.h,);
-                          },
-                          itemCount: cubit.azkarBookmarkList.length,
-                        ),
+                        CupertinoSwitch(inactiveTrackColor: Colors.black,
+                            activeTrackColor: AppColor.backgroundColor,thumbColor: AppColor.foregroundColor,value: true, onChanged: (value){
+                              print(value);
+                            })
+
                       ],
-                    );
-                  },
+                    ),
+                    ),
+                  ),
                 ),
-                SizedBox(height: 30.h,),
+                Divider(color: Colors.grey,thickness: 2.sp,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(' التحديات ',style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 50.sp,
+                        fontWeight: FontWeight.w700
+                    ),),
+                    //Icon(FontAwesomeIcons.sketch,color: AppColor.foregroundColor,)
+                    Hero(
+                      tag: 'award',
+                      transitionOnUserGestures: true,
+                      child: Image.asset('assets/images/quiz/award.png',
+                        width: 80.w,height: 80.h,fit: BoxFit.cover,),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.h,),
+                Material(
+                  borderRadius: BorderRadius.circular(20.r),
+                  color: AppColor.foregroundColor,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(20.r),
+                    onTap: (){
+                      ///Navigate to challenges screen
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),));
+                    },
+                    child: Container(
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w,vertical: 20.h),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                       // image: DecorationImage(image: AssetImage('assets/images/banner.png'),fit: BoxFit.cover),
+                      ),child:Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(FontAwesomeIcons.arrowRight,color: AppColor.backgroundColor,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('اختبر معلوماتك',style: TextStyle(
+                              color: AppColor.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 60.sp
+                            ),),
+                            Text('تحديات حماسية , مستويات متعددة',style: TextStyle(
+                            color: AppColor.white,
+                                fontSize: 45.sp
+                            ),),
+                          ],
+                        ),
+                       //Icon(FontAwesomeIcons.solidLightbulb,color: AppColor.backgroundColor,),
+                        Image.asset('assets/images/quiz/skill-development.png',color: Colors.yellow,width: 80.w,height: 80.h,fit: BoxFit.cover,),
+
+                      ],
+                    ),
+                    ),
+                  ),
+                ),
+
               ],
             );
           },

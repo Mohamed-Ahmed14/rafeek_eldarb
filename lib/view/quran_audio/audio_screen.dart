@@ -28,7 +28,8 @@ class AudioScreen extends StatelessWidget {
         child: Scaffold(
             backgroundColor: Colors.brown[100],
           appBar: AppBar(
-            backgroundColor: Colors.brown[600],
+            //backgroundColor: Colors.brown[600],
+            backgroundColor: AppColor.foregroundColor,
             title: Text(
               'الشيخ مشاري راشد العفاسي',
               style: TextStyle(color: AppColor.white),
@@ -61,29 +62,32 @@ class AudioScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.r),
-                            borderSide: BorderSide(color: Colors.brown[600]!),
+                            borderSide: BorderSide(
+                                color: AppColor.foregroundColor),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.r),
-                            borderSide: BorderSide(color: Colors.brown[600]!),
+                            borderSide: BorderSide(
+                                color: AppColor.foregroundColor),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.r),
-                            borderSide: BorderSide(color: Colors.brown[600]!),
+                            borderSide: BorderSide(
+                                color: AppColor.foregroundColor),
                           ),
-                          prefixIcon: Icon(Icons.search_outlined,color: Colors.brown[600]!,),
+                          prefixIcon: Icon(Icons.search_outlined,color: AppColor.foregroundColor,),
                           contentPadding: EdgeInsetsDirectional.all(8.sp),
 
                         ),
-                        cursorColor: Colors.brown[600]!,
-                        style: TextStyle(color: Colors.brown[900]),
+                        cursorColor: AppColor.foregroundColor,
+                        style: TextStyle(color: AppColor.foregroundColor),
                       ),
                       SizedBox(height: 20.h,),
                       Visibility(
                         visible: cubit.searchAudioController.text.trim().isEmpty ||
                         cubit.searchAudioList.isNotEmpty,
                         replacement: Center(child: Text('لم يتم العثور علي السورة',style: TextStyle(
-                            color: Colors.brown[600]
+                            color: AppColor.foregroundColor
                         ),)),
                         child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
                         crossAxisSpacing: 10.w,mainAxisSpacing: 10.h,childAspectRatio: 15/10),shrinkWrap: true,

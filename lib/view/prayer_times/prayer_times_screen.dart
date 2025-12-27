@@ -53,7 +53,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
             }
            else if(cubit.prayerTimesByCity!= null && state is GetPrayerTimesSuccessState){
              return  Padding(
-               padding: EdgeInsets.all(20.0.sp),
+               padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w,vertical: 40.h),
                child: SingleChildScrollView(
                  child: Column(
                    mainAxisAlignment: MainAxisAlignment.center,

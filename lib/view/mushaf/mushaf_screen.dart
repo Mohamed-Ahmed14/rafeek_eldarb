@@ -163,10 +163,10 @@ class _MushafScreenState extends State<MushafScreen> {
                                               ScaffoldMessenger.of(context).showSnackBar(
                                                 SnackBar(content: SizedBox(height: 80.h,
                                                   child: Text('تم حفظ الصفحة',style: TextStyle(
-                                                    color: Colors.white,
+                                                    color: AppColor.foregroundColor,
                                                   ),textAlign: TextAlign.center,),
                                                 ),duration: Duration(seconds: 2),
-                                                backgroundColor: Colors.brown,
+                                                backgroundColor: Color(0xffd4b9A8),
                                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                                 padding: EdgeInsetsDirectional.all(0),),
                                               );

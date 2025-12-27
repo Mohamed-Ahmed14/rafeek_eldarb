@@ -6,4 +6,6 @@ class SharedKeys{
   static const String singleMode = 'singleMode';
 
   static const String audioNumber = 'audioNumber';
+
+  static const String uid = 'uid';
 }

@@ -19,7 +19,8 @@ class AudioWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsetsDirectional.all(10.sp),
         decoration: BoxDecoration(
-          color: Colors.brown[600],
+          //color: Colors.brown[600],
+          color: AppColor.foregroundColor,
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: Column(
