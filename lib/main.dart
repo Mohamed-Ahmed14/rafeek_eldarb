@@ -27,6 +27,8 @@ Future<void> main() async{
   //comment that line when debug with emulator
  // await initAudioHandler();
 
+  //Test
+ // SharedHelper.remove(key: 'uid');
 
 
   /// to generate keys for localization

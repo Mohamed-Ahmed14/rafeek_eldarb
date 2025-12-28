@@ -7,5 +7,8 @@ class SharedKeys{
 
   static const String audioNumber = 'audioNumber';
 
+
   static const String uid = 'uid';
+  //Firebase FireStore
+  static const String users = 'users';
 }

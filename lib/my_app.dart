@@ -9,6 +9,7 @@ import 'package:rafeek_eldarb/view/layout/layout_screen.dart';
 
 import 'package:rafeek_eldarb/view_model/cubit/audio_cubit/audio_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/azkar_cubit/azkar_cubit.dart';
+import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/prayer_cubit/prayer_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/settings_cubit/settings_cubit.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => PrayerCubit(),),
             BlocProvider(create: (context) => AzkarCubit(),),
             BlocProvider(create: (context) => SettingsCubit()),
+            BlocProvider(create: (context) => ChallengeCubit(),)
           ],
           child: MaterialApp(
               localizationsDelegates: context.localizationDelegates,
