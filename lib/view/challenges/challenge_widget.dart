@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rafeek_eldarb/view/challenges/question_screen.dart';
+import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_cubit.dart';
 
 import '../../view_model/utils/app_colors.dart';
 
 class ChallengeWidget extends StatelessWidget {
-  const ChallengeWidget({super.key});
+  final int challengeIndex;
+  const ChallengeWidget({required this.challengeIndex,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +39,14 @@ class ChallengeWidget extends StatelessWidget {
                   fontWeight: FontWeight.w700
               ),),
               IconButton(onPressed: (){
+                //Get challenge Data
+                ChallengeCubit.get(context).qetChallengeData(challengeIndex + 1);
+                //Init The challenge
+                ChallengeCubit.get(context).initChallenge();
                 ///Implement navigator to challenge screen
-                Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionScreen(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionScreen(
+                  challengeIndex: challengeIndex,
+                ),));
               },
                   icon: Icon(FontAwesomeIcons.solidCirclePlay,color: AppColor.foregroundColor,))
             ],

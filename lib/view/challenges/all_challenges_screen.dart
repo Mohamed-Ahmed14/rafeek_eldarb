@@ -48,7 +48,7 @@ class AllChallengesScreen extends StatelessWidget {
         body: ListView.separated(
           padding: EdgeInsetsDirectional.all(20.w),
             itemBuilder: (context, index) {
-          return ChallengeWidget();
+          return ChallengeWidget(challengeIndex: index,);
         },
             separatorBuilder: (context, index) {
               return SizedBox(height: 20.h,);

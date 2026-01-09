@@ -16,6 +16,15 @@ import 'firebase_options.dart';
 
 Future<void> main() async{
 
+  //To prevent red screen error from appear
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return const Center(
+      child: Text(
+        'حدث خطأ ما برجاء المحاولة مرة اخري',
+        style: TextStyle(color: Colors.red),
+      ),
+    );
+  };
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(

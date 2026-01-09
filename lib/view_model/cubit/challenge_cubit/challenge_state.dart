@@ -20,3 +20,19 @@ class CreateUserDataErrorState extends ChallengeState{}
 class GetUserDataLoadingState extends ChallengeState{}
 class GetUserDataSuccessState extends ChallengeState{}
 class GetUserDataErrorState extends ChallengeState{}
+
+
+///Challenges Questions
+class GetChallengeDataLoadingState extends ChallengeState{}
+class GetChallengeDataSuccessState extends ChallengeState{}
+class GetChallengeDataErrorState extends ChallengeState{}
+
+class GetNexQuizLoadingState extends ChallengeState{}
+class GetNexQuizSuccessState extends ChallengeState{}
+class GetNexQuizErrorState extends ChallengeState{}
+
+class CheckAnsSuccessState extends ChallengeState{}
+
+class QuizTimeState extends ChallengeState{}
+class TimeUpState extends ChallengeState{}
+class TimerStopState extends ChallengeState{}

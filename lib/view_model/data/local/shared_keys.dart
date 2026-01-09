@@ -11,4 +11,6 @@ class SharedKeys{
   static const String uid = 'uid';
   //Firebase FireStore
   static const String users = 'users';
+  static const String challenges = 'challenges';
+  static const String questions = 'questions';
 }

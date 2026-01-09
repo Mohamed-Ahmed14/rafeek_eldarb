@@ -123,7 +123,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                               borderRadius: BorderRadius.circular(10),
                             ),child: Column(
                             children: [
-                              Text("1250",style: TextStyle(
+                              Text("${cubit.userData?.totalScore ?? 1250}",style: TextStyle(
                                   color: Color(0xffd4b996),
                                   fontWeight: FontWeight.bold
                               ),),
@@ -145,7 +145,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                               borderRadius: BorderRadius.circular(10),
                             ),child: Column(
                             children: [
-                              Text("15",style: TextStyle(
+                              Text("${cubit.userData?.challengesPassed ?? 0}",style: TextStyle(
                                   color: Color(0xffd4b996),
                                   fontWeight: FontWeight.bold
                               ),),
@@ -166,13 +166,13 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                         Text("تقدمك العام",
                           style: TextStyle(color: AppColor.white,
                               fontWeight: FontWeight.w700),),
-                        Text('15/50',style: TextStyle(color: AppColor.white,
+                        Text('${cubit.userData?.challengesPassed ?? 0}/20',style: TextStyle(color: AppColor.white,
                             fontWeight: FontWeight.w700),)
                       ],
                     ),
                     SizedBox(height: 10.h,),
                     LinearProgressIndicator(
-                      value: 15/50,
+                      value: (cubit.userData?.challengesPassed??0)/50,
                       backgroundColor: Colors.black,
                       color: Color(0xffd4b996),
                       borderRadius: BorderRadius.circular(20.r),
@@ -212,7 +212,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                       shrinkWrap: true,
                       // physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return ChallengeWidget();
+                        return ChallengeWidget(challengeIndex: index,);
                       },
                       separatorBuilder: (context, index) {
                         return SizedBox(height: 20.h,);
