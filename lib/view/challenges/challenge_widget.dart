@@ -12,6 +12,7 @@ class ChallengeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = ChallengeCubit.get(context);
     return Container(
       padding: EdgeInsetsDirectional.all(40.w),
       decoration: BoxDecoration(
@@ -29,18 +30,18 @@ class ChallengeWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Color(0xffd4b996),
                   borderRadius: BorderRadius.circular(20.r),
-                ),child: Text("01",style: TextStyle(
+                ),child: Text((challengeIndex+1).toString(),style: TextStyle(
                   color: AppColor.foregroundColor,
                   fontWeight: FontWeight.bold
               ),),
               ),
-              Text("أسئلة عامة",style: TextStyle(
+              Text("${cubit.challengesDetails[challengeIndex].category}",style: TextStyle(
                   color: AppColor.black,
                   fontWeight: FontWeight.w700
               ),),
               IconButton(onPressed: (){
                 //Get challenge Data
-                ChallengeCubit.get(context).qetChallengeData(challengeIndex + 1);
+                ChallengeCubit.get(context).getChallengeData(challengeIndex + 1);
                 //Init The challenge
                 ChallengeCubit.get(context).initChallenge();
                 ///Implement navigator to challenge screen
@@ -62,6 +63,7 @@ class ChallengeWidget extends StatelessWidget {
               Row(
                 children: [
                   Icon(Icons.help_rounded,textDirection: TextDirection.ltr,color: Color(0xffd4b996),),
+                  SizedBox(width: 5.w,),
                   Text("10 أسئلة",style: TextStyle(
                     color: Color(0xffd4b996),
                   ),)
@@ -70,7 +72,8 @@ class ChallengeWidget extends StatelessWidget {
               Row(
                 children: [
                   Icon(Icons.timer_rounded,color: Color(0xffd4b996),),
-                  Text("5 دقائق",style: TextStyle(
+                  SizedBox(width: 5.w,),
+                  Text("2:30 دقائق",style: TextStyle(
                     color: Color(0xffd4b996),
                   ),)
                 ],
@@ -78,7 +81,8 @@ class ChallengeWidget extends StatelessWidget {
               Row(
                 children: [
                   Icon(Icons.stars_rounded,color: Color(0xffd4b996),),
-                  Text("50 نقطة",style: TextStyle(
+                  SizedBox(width: 5.w,),
+                  Text("${cubit.challengesDetails[challengeIndex].challengePoints ?? "50"} نقطة ",style: TextStyle(
                     color: Color(0xffd4b996),
                   ),)
                 ],

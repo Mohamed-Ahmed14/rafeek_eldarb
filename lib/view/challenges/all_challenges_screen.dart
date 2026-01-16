@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeek_eldarb/view/challenges/challenge_screen.dart';
 import 'package:rafeek_eldarb/view/challenges/challenge_widget.dart';
+import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_cubit.dart';
 
 import '../../view_model/utils/app_colors.dart';
 
@@ -53,7 +54,7 @@ class AllChallengesScreen extends StatelessWidget {
             separatorBuilder: (context, index) {
               return SizedBox(height: 20.h,);
             },
-            itemCount: 10),
+            itemCount: ChallengeCubit.get(context).challengesDetails.length),
       ),
     );
   }

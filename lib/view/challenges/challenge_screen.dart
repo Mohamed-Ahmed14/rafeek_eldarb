@@ -76,30 +76,17 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
               fontSize: 50.sp,
               fontWeight: FontWeight.w700,
             ),),);
-          }else if(state is SignInAnonymouslyLoadingState || state is CreateUserDataLoadingState){
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(color: Colors.black,),
-                  SizedBox(height: 10.h,),
-                  Text(' جاري التحميل ',style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 50.sp,
-                      color: Colors.black
-                  ),)
-                ],
-              ),
-            );
           }
-          else if(state is GetUserDataErrorState){
+
+          else if(state is GetUserDataErrorState || state is GetChallengesDetailsErrorState){
             return Center(child: Text('حدث خطأ برجاء المحاولة في وقت اخر',style: TextStyle(
               color: Colors.black,
               fontSize: 50.sp,
               fontWeight: FontWeight.w700,
             ),),);
 
-          }else{
+          }
+          else if(state is GetUserDataSuccessState){
             return Column(
               children: [
                 //Person Details -> total score & number of levels finished
@@ -123,7 +110,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                               borderRadius: BorderRadius.circular(10),
                             ),child: Column(
                             children: [
-                              Text("${cubit.userData?.totalScore ?? 1250}",style: TextStyle(
+                              Text("${cubit.userData?.totalScore ?? 0}",style: TextStyle(
                                   color: Color(0xffd4b996),
                                   fontWeight: FontWeight.bold
                               ),),
@@ -166,7 +153,8 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                         Text("تقدمك العام",
                           style: TextStyle(color: AppColor.white,
                               fontWeight: FontWeight.w700),),
-                        Text('${cubit.userData?.challengesPassed ?? 0}/20',style: TextStyle(color: AppColor.white,
+                        Text('${cubit.challengesDetails.length} / ${cubit.userData?.challengesPassed ?? 0}',
+                          style: TextStyle(color: AppColor.white,
                             fontWeight: FontWeight.w700),)
                       ],
                     ),
@@ -182,29 +170,32 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                   ],
                 ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("التحديات المتاحة",style: TextStyle(
-                        color: AppColor.foregroundColor
-                    ),),
-                    Row(
-                      children: [
-                        Text("عرض الكل",
-                          style: TextStyle(
-                              color: Colors.grey[700]
-                          ),),
-                        IconButton(style: IconButton.styleFrom(
-                            padding: EdgeInsetsDirectional.zero
-                        ),onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => AllChallengesScreen(),));
-                        },
-                            icon: Icon(Icons.arrow_forward_ios_rounded,
-                              color: Colors.grey[700],size: 15,))
-                      ],
-                    )
+                Padding(
+                  padding:  EdgeInsetsDirectional.symmetric(horizontal: 20.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("التحديات المتاحة",style: TextStyle(
+                          color: AppColor.foregroundColor
+                      ),),
+                      Row(
+                        children: [
+                          Text("عرض الكل",
+                            style: TextStyle(
+                                color: Colors.grey[700]
+                            ),),
+                          IconButton(style: IconButton.styleFrom(
+                              padding: EdgeInsetsDirectional.zero
+                          ),onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AllChallengesScreen(),));
+                          },
+                              icon: Icon(Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[700],size: 15,))
+                        ],
+                      )
 
-                  ],
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: ListView.separated(
@@ -217,12 +208,31 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                       separatorBuilder: (context, index) {
                         return SizedBox(height: 20.h,);
                       },
-                      itemCount: 4),
+                      itemCount: 3),
                 ),
               ],
             );
           }
-
+          else{
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(color: Colors.black,),
+                  SizedBox(height: 10.h,),
+                  Text(' جاري التحميل ',style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 50.sp,
+                      color: Colors.black
+                  ),)
+                ],
+              ),
+            );
+          }
+          // else if(state is SignInAnonymouslyLoadingState ||
+            //     state is CreateUserDataLoadingState || state is GetChallengesDetailsLoadingState){
+            //
+            // }
           },
 
         )

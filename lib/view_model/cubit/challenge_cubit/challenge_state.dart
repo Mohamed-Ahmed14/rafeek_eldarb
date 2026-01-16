@@ -21,6 +21,9 @@ class GetUserDataLoadingState extends ChallengeState{}
 class GetUserDataSuccessState extends ChallengeState{}
 class GetUserDataErrorState extends ChallengeState{}
 
+class GetChallengesDetailsLoadingState extends ChallengeState{}
+class GetChallengesDetailsSuccessState extends ChallengeState{}
+class GetChallengesDetailsErrorState extends ChallengeState{}
 
 ///Challenges Questions
 class GetChallengeDataLoadingState extends ChallengeState{}
@@ -36,3 +39,12 @@ class CheckAnsSuccessState extends ChallengeState{}
 class QuizTimeState extends ChallengeState{}
 class TimeUpState extends ChallengeState{}
 class TimerStopState extends ChallengeState{}
+
+///Update Scores To Firebase
+class UpdateChallengeScoreLoadingState extends ChallengeState{}
+class UpdateChallengeScoreSuccessState extends ChallengeState{}
+class UpdateChallengeScoreErrorState extends ChallengeState{}
+
+class UpdateUserDataLoadingState extends ChallengeState{}
+class UpdateUserDataSuccessState extends ChallengeState{}
+class UpdateUserDataErrorState extends ChallengeState{}

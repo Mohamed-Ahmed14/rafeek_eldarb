@@ -26,7 +26,7 @@ class ChoiceWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.r),
             onTap: () {
               //can choose only one answer at each question
-              if(cubit.isSelected == false){
+              if(cubit.isSelected == false && cubit.remainingSeconds != cubit.quizFixedTime){
                 cubit.checkAns(optionNum);
               }
             },

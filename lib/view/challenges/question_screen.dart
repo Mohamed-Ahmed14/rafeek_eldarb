@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeek_eldarb/view/challenges/challenge_score_screen.dart';
+import 'package:rafeek_eldarb/view/challenges/challenge_screen.dart';
 import 'package:rafeek_eldarb/view/challenges/choice_widget.dart';
 import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_state.dart';
@@ -47,7 +48,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                   onPressed: () {
                     ChallengeCubit.get(context).stopTimer();
-                    Navigator.pop(context);
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),),
+                        (route) => false,);
                   },
                   icon: Icon(
                     Icons.arrow_back_rounded,
@@ -68,7 +70,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               if (((cubit.challengeModel?.questions?.length ??
                   0)-1) ==
                   cubit.quizNumber) {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
@@ -233,7 +235,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                     0)-1) ==
                                 cubit.quizNumber) {
                              if(cubit.isSelected){
-                               Navigator.push(
+                               Navigator.pushReplacement(
                                    context,
                                    MaterialPageRoute(
                                      builder: (context) =>
@@ -266,7 +268,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                 ),
               );
-            } else if (state is GetChallengeDataErrorState) {
+            }
+            else if (state is GetChallengeDataErrorState) {
               return Center(
                 child: Text(
                   'حدث خطأ برجاء المحاولة في وقت اخر',
@@ -299,7 +302,26 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 ),
               );
             }else{
-              return SizedBox();
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      ' جاري التحميل ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 50.sp,
+                          color: Colors.black),
+                    )
+                  ],
+                ),
+              );
             }
           },
         ),

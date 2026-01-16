@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rafeek_eldarb/model/challenges/challenge_model.dart';
@@ -95,7 +96,7 @@ class ChallengeCubit extends Cubit<ChallengeState>{
     }
   }
 
-///Get User Data
+///Get User Data & Challenges Data
 //Use That in UI
  UserModel? userData;
 Future<void> getUserDataFireStore() async{
@@ -122,6 +123,7 @@ Future<void> getUserDataFireStore() async{
       print(userData!.uid);
       print(userData!.totalScore);
       print(userData!.challengesPassed);
+      await getAllChallengesDetails();
       emit(GetUserDataSuccessState());
     }catch(e){
       print("Error Getting User Data");
@@ -141,10 +143,16 @@ Future<void> getUserDataFireStore() async{
     }
   }
 
-
+///Sorting algorithm
 ///Here Challenge Questions
  ChallengeModel? challengeModel;
-Future<void> qetChallengeData(int challengeID) async{
+  int challengeNumber = 1; //the default is 1
+Future<void> getChallengeData(int challengeID) async{
+  challengeNumber = challengeID;
+  if(challengeModel?.questions != null){
+    challengeModel?.questions?.clear();
+  }
+
   emit(GetChallengeDataLoadingState());
   try{
     await fs.collection(SharedKeys.challenges).doc(challengeID.toString()).get().then((value){
@@ -156,13 +164,17 @@ Future<void> qetChallengeData(int challengeID) async{
     });
     await fs.collection(SharedKeys.challenges).doc(challengeID.toString()).
     collection(SharedKeys.questions).get().then((value){
-      for(var i in value.docs){
-        challengeModel?.questions?.add(QuestionModel.fromJson(i.data()));
+      for(var doc in value.docs){
+
+        // int questionId = int.tryParse(doc.id) ?? 1;
+        // challengeModel?.questions?.insert(questionId -1 , QuestionModel.fromJson(doc.data()));
+        challengeModel?.questions?.add(QuestionModel.fromJson(doc.data()));
         //print(challengeModel?.questions?[0].opt1);
         //print(i.data());
         //challengeModel?.questions = ChallengeModel.fromJson(i.data());
         //print(challengeModel?.challengePoints?? []);
       }
+
     });
     emit(GetChallengeDataSuccessState());
   }catch(e){
@@ -170,6 +182,27 @@ Future<void> qetChallengeData(int challengeID) async{
     emit(GetChallengeDataErrorState());
   }
 }
+
+///Sorting algorithm
+///Here To get challenges details such as: category,points,number_of questions
+List<ChallengeModel> challengesDetails = [];
+  Future<void> getAllChallengesDetails() async{
+  challengesDetails.clear();
+  emit(GetChallengesDetailsLoadingState());
+  try{
+    await fs.collection(SharedKeys.challenges).orderBy('order').get().then((value){
+      for(var doc in value.docs){
+        challengesDetails.add(ChallengeModel.fromJson(doc.data()));
+        // int challengeId = int.tryParse(doc.id) ?? 1 ;
+        // challengesDetails.insert(challengeId - 1, ChallengeModel.fromJson(doc.data()));
+      }
+    });
+  }catch(e){
+    print(e.toString());
+    emit(GetChallengesDetailsErrorState());
+  }
+}
+
 
 ///Dealing with single challenge
 int quizNumber = 0; //Number of quiz
@@ -212,15 +245,18 @@ void getNextQuiz(){
 emit(GetNexQuizSuccessState());
 }
 
-
 void checkAns(String? optNum){
+  if(remainingSeconds == 0){
+    return;
+  }
   totalTimePassed+=(quizFixedTime-remainingSeconds);
   isSelected =true;
   userAns = optNum;
   quizAns = challengeModel?.questions?[quizNumber].ans;
   if((quizAns ?? "") == optNum){
     isRight = true;
-    quizPoints = 10;
+    //quizPoints = 10;
+    quizPoints = ((challengeModel?.challengePoints?? 50)/10).toInt();
     numOfRQ++;
   }else{
     isRight =false;
@@ -240,7 +276,7 @@ void startCountdown(){
   timer = Timer.periodic(
   const Duration(seconds: 1),
       (timer) {
-if(remainingSeconds == 0){
+if(remainingSeconds == 1){
   timer.cancel();
   //Time Passed Go to next question
   userAns = "None";
@@ -257,11 +293,84 @@ if(remainingSeconds == 0){
 }
       },);
 }
-// void startTimer(){
-//   timer = Timer(Duration(seconds: 30), () => print("Time Finish"),);
-// }
+//To Stop Timer when start next question
 void stopTimer(){
   timer?.cancel();
   emit(TimerStopState());
 }
+// void startTimer(){
+//   timer = Timer(Duration(seconds: 30), () => print("Time Finish"),);
+// }
+
+///Store User Challenge Data in FireStore after each challenge
+//This Function to update single Challenge Score
+Future<void> updateChallengeScore() async{
+  String? uid = await SharedHelper.get(key: SharedKeys.uid);
+  if(uid == null){
+    return;
+  }
+  emit(UpdateChallengeScoreLoadingState());
+  try{
+    await fs.collection(SharedKeys.users).doc(uid).
+    collection(SharedKeys.scores).doc(challengeNumber.toString()).
+    set({
+      "challenge_number":challengeNumber,
+      "score":userChallengePoints,
+    });
+    await updateUserData();
+    emit(UpdateChallengeScoreSuccessState());
+  }catch(e){
+    print(e.toString());
+    emit(UpdateChallengeScoreErrorState());
+  }
+
+}
+
+Future<void> updateUserData() async{
+  int challengesPassed = userData?.challengesPassed ?? 10;
+  int totalScore;
+  String? uid = await SharedHelper.get(key: SharedKeys.uid);
+  if(uid == null){
+    return;
+  }
+  emit(UpdateUserDataLoadingState());
+  try{
+    //check new challenged is passed
+    if(challengeNumber > challengesPassed){
+      challengesPassed = challengeNumber;
+    }
+    //get user total score
+    totalScore = await getAllScores(uid);
+    await fs.collection(SharedKeys.users).doc(uid).update({
+      "challengesPassed":challengesPassed,
+      "totalScore":totalScore
+    }).then((value){
+      getUserDataFireStore();
+      emit(UpdateUserDataSuccessState());
+    });
+
+  }catch(e){
+    print(e.toString());
+    emit(UpdateUserDataErrorState());
+  }
+}
+
+Future<int> getAllScores(String uid) async{
+  int totalScore = 0;
+  int singleChallenge = 0;
+  try{
+    await fs.collection(SharedKeys.users).doc(uid).collection(SharedKeys.scores).get().then((value){
+      for(var doc in value.docs){
+        singleChallenge = doc.get('score');
+        totalScore += singleChallenge;
+      }
+    });
+    return totalScore;
+  }catch(e){
+    print(e.toString());
+  }
+  return totalScore;
+}
+
+
 }

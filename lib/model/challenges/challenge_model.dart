@@ -1,15 +1,19 @@
 class ChallengeModel{
+  String? id;
   String? category;
   int? challengePoints;
   int? numOfQuestions;
+  int? order;
   List<QuestionModel>? questions;
 
-  ChallengeModel({this.category,this.numOfQuestions,this.challengePoints,this.questions});
+  ChallengeModel({this.id,this.category,this.numOfQuestions,this.challengePoints,this.order,this.questions});
 
   ChallengeModel.fromJson(Map<String,dynamic> json){
+    id = json["id"];
     category = json["category"];
     numOfQuestions = json["num_of_questions"];
     challengePoints = json["challenge_points"];
+    order = json["order"];
     // if(json["questions"] != null){
     //   for(var i in json["questions"]){
     //    questions?.add(QuestionModel.fromJson(i));
@@ -20,6 +24,7 @@ class ChallengeModel{
 }
 
 class QuestionModel{
+  String? id;
   String? quiz;
   String? opt1;
   String? opt2;
@@ -28,9 +33,10 @@ class QuestionModel{
   String? ans;
 
   QuestionModel(
-  {this.quiz, this.opt1, this.opt2, this.opt3, this.opt4, this.ans});
+  {this.id,this.quiz, this.opt1, this.opt2, this.opt3, this.opt4, this.ans});
 
   QuestionModel.fromJson(Map<String,dynamic> json){
+    id = json["id"];
     quiz = json["quiz"];
     opt1 = json["opt1"];
     opt2 = json["opt2"];
