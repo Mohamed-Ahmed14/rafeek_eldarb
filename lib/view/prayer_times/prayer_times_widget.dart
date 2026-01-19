@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeek_eldarb/view_model/utils/app_colors.dart';
-
-import '../../view_model/cubit/prayer_cubit/prayer_cubit.dart';
 import '../../view_model/cubit/quran_cubit/quran_cubit.dart';
 
 class PrayerTimesWidget extends StatelessWidget {

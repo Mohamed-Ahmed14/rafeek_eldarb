@@ -2,7 +2,6 @@
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:quran/quran.dart';
 import 'package:rafeek_eldarb/main.dart';
 import 'package:rafeek_eldarb/view_model/utils/audio_handler.dart';
@@ -46,7 +45,7 @@ class AudioCubit extends Cubit<AudioState>{
         }
         //await (audioHandler as AudioPlayerHandler).getPlayer().setUrl('22');
         await (audioHandler as AudioPlayerHandler).getPlayer().setUrl(
-            "https://github.com/The-Quran-Project/Quran-Audio-Chapters/raw/refs/heads/main/Data/1/${index}.mp3");
+            "https://github.com/The-Quran-Project/Quran-Audio-Chapters/raw/refs/heads/main/Data/1/$index.mp3");
         duration =  ((audioHandler as AudioPlayerHandler).getPlayer().duration )??Duration.zero;
         await setItem(url,index);
         surahIndex = index;

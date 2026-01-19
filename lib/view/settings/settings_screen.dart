@@ -6,9 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quran/quran.dart';
 import 'package:rafeek_eldarb/view/mushaf/mushaf_screen.dart';
 import 'package:rafeek_eldarb/view/quran_audio/audio_surah_screen.dart';
-import 'package:rafeek_eldarb/view/settings/azkar_bookmark_widget.dart';
-import 'package:rafeek_eldarb/view_model/cubit/azkar_cubit/azkar_cubit.dart';
-import 'package:rafeek_eldarb/view_model/cubit/azkar_cubit/azkar_state.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/settings_cubit/settings_cubit.dart';
 import 'package:rafeek_eldarb/view_model/data/local/shared_helper.dart';
@@ -25,16 +22,17 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.brown[100],
+        backgroundColor: AppColor.backgroundColor,
         appBar: AppBar(
           backgroundColor: AppColor.foregroundColor,
           centerTitle: true,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(' بروفايل ',style: TextStyle(
-                color: Colors.white
-              ),),
+              Text(
+                ' بروفايل ',
+                style: TextStyle(color: Colors.white),
+              ),
               // CircleAvatar(backgroundColor: Colors.brown[100],
               //     child: Icon(Icons.book,color: Colors.brown[900],size: 100.r,)),
               //Image.asset('assets/images/bookmarkIcon.png',height: 120.h,width: 120.h,fit: BoxFit.cover,),
@@ -42,292 +40,471 @@ class SettingsScreen extends StatelessWidget {
           ),
           actions: [
             Image.asset('assets/images/dua.png'),
-            SizedBox(width: 20.w,),
+            SizedBox(
+              width: 20.w,
+            ),
           ],
         ),
-        body: BlocBuilder<SettingsCubit,SettingsState>(
+        body: BlocBuilder<SettingsCubit, SettingsState>(
           builder: (context, state) {
             var cubit = SettingsCubit.get(context);
-            return  ListView(
+            return ListView(
               //shrinkWrap: true,
               //physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsetsDirectional.all(20.sp),
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(' المصحف ',style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 50.sp,
-                        fontWeight: FontWeight.w700
-                    ),),
-                    Image.asset('assets/images/holy-quran.png',width: 80.w,height: 80.h,fit: BoxFit.cover,),
-                  ],
-                ),
-                SizedBox(height: 10.h,),
-                Material(
-                  color: AppColor.foregroundColor,
-                  borderRadius: BorderRadius.circular(12.r),
-                  child: InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MushafScreen(
-                        pageIndex: SharedHelper.get(key: SharedKeys.savedPage),
-                      ),));
-                    },
-                    borderRadius: BorderRadius.circular(12.r),
-                    child: Container(
-                      padding: EdgeInsetsDirectional.all(20.sp),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(' سورة ',style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 50.sp,
-                                  fontWeight: FontWeight.w700
-                              ),),
-                              Text(' ${SettingsCubit.get(context).getSurahName(getPageData(
-                                  SharedHelper.get(key: SharedKeys.savedPage)).last["surah"])} ',style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 50.sp,
-                                  fontWeight: FontWeight.w700
-                              ),),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(' الصفحة ',style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 50.sp,
-                                  fontWeight: FontWeight.w700
-                              ),),
-                              Text(' ${QuranCubit.get(context).convertToArabicNumbers(SharedHelper.get(key: SharedKeys.savedPage).toString())} ',style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 50.sp,
-                                  fontWeight: FontWeight.w700
-                              ),),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                //Message Section
+                Container(
+                  padding: EdgeInsetsDirectional.all(30.w),
+                  decoration: BoxDecoration(
+                    //color: Color(0xff07451F),//0xff07351F//0xff072A1F
+                    color: Color(0xff072A1F),
+                    borderRadius: BorderRadius.circular(25.r),
                   ),
-                ),
-                Divider(color: Colors.grey,thickness: 2.sp,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(' إستماع ',style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 50.sp,
-                        fontWeight: FontWeight.w700
-                    ),),
-                    Image.asset('assets/images/headphones.png',
-                      width: 80.w,height: 80.h,fit: BoxFit.fill,),
-                  ],
-                ),
-                SizedBox(height: 10.h,),
-                Material(
-                  color: AppColor.foregroundColor,
-                  borderRadius: BorderRadius.circular(12.r),
-                  child: InkWell(
-                    onTap: (){
-
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => AudioSurahScreen(
-                            surahModel: QuranCubit.get(context).surahsNameAndAyah[SharedHelper.get(key: SharedKeys.audioNumber)-1]),));
-                    },
-                    borderRadius: BorderRadius.circular(12.r),
-                    child: Container(
-                      padding: EdgeInsetsDirectional.all(20.sp),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(' سورة ',style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 50.sp,
-                                  fontWeight: FontWeight.w700
-                              ),),
-                              Text(' ${SettingsCubit.get(context).getSurahName(
-                                  SharedHelper.get(key: SharedKeys.audioNumber)
-                              )} ',style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 50.sp,
-                                  fontWeight: FontWeight.w700
-                              ),),
-                            ],
-                          ),
-
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                // Text("${cubit.isUserSignedIn()}"),
-                // ElevatedButton(onPressed: (){
-                //   cubit.signInAnonymously();
-                // },
-                //     child: Text('Anonymous Sign In')),
-                // BlocBuilder<AzkarCubit,AzkarState>(
-                //   builder: (context, state) {
-                //     var cubit = AzkarCubit.get(context);
-                //     return Column(
-                //       children: [
-                //         Divider(color: Colors.grey,thickness: 2.sp,),
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             Text(' الأذكار ',style: TextStyle(
-                //                 color: Colors.black,
-                //                 fontSize: 50.sp,
-                //                 fontWeight: FontWeight.w700
-                //             ),),
-                //             Image.asset('assets/images/arabic.png',
-                //               width: 80.w,height: 80.h,fit: BoxFit.fill,),
-                //           ],
-                //         ),
-                //         ListView.separated(
-                //           shrinkWrap: true,
-                //           physics: NeverScrollableScrollPhysics(),
-                //           itemBuilder: (context, index) {
-                //             return AzkarBookmarkWidget(zkrModel: cubit.azkarBookmarkList[index]);
-                //           },
-                //           separatorBuilder: (context, index) {
-                //             return SizedBox(height: 10.h,);
-                //           },
-                //           itemCount: cubit.azkarBookmarkList.length,
-                //         ),
-                //       ],
-                //     );
-                //   },
-                // ),
-                Divider(color: Colors.grey,thickness: 2.sp,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(' الإشعارات ',style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 50.sp,
-                        fontWeight: FontWeight.w700
-                    ),),
-                    //Icon(Icons.notifications_on,color: AppColor.foregroundColor,),
-                    Image.asset('assets/images/notification.png',
-                      width: 80.w,height: 80.h,fit: BoxFit.cover,),
-                  ],
-                ),
-                SizedBox(height: 10.h,),
-                Material(
-                  borderRadius: BorderRadius.circular(20.r),
-                  color: AppColor.foregroundColor,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(20.r),
-                    onTap: (){
-                      ///Switch Notification on/off
-                    },
-                    child: Container(
-                      padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w,vertical: 20.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                        // image: DecorationImage(image: AssetImage('assets/images/banner.png'),fit: BoxFit.cover),
-                      ),child:Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(' مفعل ',style: TextStyle(
-                                color: AppColor.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 60.sp
-                            ),),
-                          ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsetsDirectional.all(10.w),
+                        decoration: BoxDecoration(
+                          color: AppColor.lightGreen,
+                          borderRadius: BorderRadius.circular(25.r),
                         ),
-                        CupertinoSwitch(inactiveTrackColor: Colors.black,
-                            activeTrackColor: AppColor.backgroundColor,thumbColor: AppColor.foregroundColor,value: true, onChanged: (value){
-                              print(value);
-                            })
-
-                      ],
-                    ),
-                    ),
-                  ),
-                ),
-                Divider(color: Colors.grey,thickness: 2.sp,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(' التحديات ',style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 50.sp,
-                        fontWeight: FontWeight.w700
-                    ),),
-                    //Icon(FontAwesomeIcons.sketch,color: AppColor.foregroundColor,)
-                    Hero(
-                      tag: 'award',
-                      transitionOnUserGestures: true,
-                      child: Image.asset('assets/images/quiz/award.png',
-                        width: 80.w,height: 80.h,fit: BoxFit.cover,),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.h,),
-                Material(
-                  borderRadius: BorderRadius.circular(20.r),
-                  color: AppColor.foregroundColor,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(20.r),
-                    onTap: (){
-                      ///Navigate to challenges screen
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),));
-                    },
-                    child: Container(
-                      padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w,vertical: 20.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                       // image: DecorationImage(image: AssetImage('assets/images/banner.png'),fit: BoxFit.cover),
-                      ),child:Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(FontAwesomeIcons.arrowRight,color: AppColor.backgroundColor,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('اختبر معلوماتك',style: TextStyle(
+                            Icon(
+                              FontAwesomeIcons.solidMoon,
                               color: AppColor.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 60.sp
-                            ),),
-                            Text('تحديات حماسية , مستويات متعددة',style: TextStyle(
-                            color: AppColor.white,
-                                fontSize: 45.sp
-                            ),),
+                              size: 50.r,
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Text(
+                              'رسالة اليوم',
+                              style: TextStyle(color: AppColor.white),
+                            ),
                           ],
                         ),
-                       //Icon(FontAwesomeIcons.solidLightbulb,color: AppColor.backgroundColor,),
-                        Image.asset('assets/images/quiz/skill-development.png',color: Colors.yellow,width: 80.w,height: 80.h,fit: BoxFit.cover,),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Text(
+                          cubit.dailyMsg ?? cubit.defaultMessage,
+                          style: TextStyle(
+                            color: AppColor.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      if(cubit.isDailyMsgDescActive)
+                        Align(
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: Text('\"${cubit.dailyMsgDesc ?? cubit.defaultMsgDesc}\"',style: TextStyle(
+                          color: AppColor.white,
 
-                      ],
-                    ),
+                        ),),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                //Challenges Section
+                Material(
+                  borderRadius: BorderRadius.circular(25.r),
+                  color: AppColor.foregroundColor,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(25.r),
+                    onTap: () {
+                      ///Navigate to challenges screen
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChallengeScreen(),
+                          ));
+                    },
+                    child: Container(
+                      padding: EdgeInsetsDirectional.symmetric(
+                          vertical:30.h,horizontal: 30.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Hero(
+                                tag: 'award',
+                                transitionOnUserGestures: true,
+                                child: Image.asset(
+                                  'assets/images/quiz/award.png',
+                                  width: 80.w,
+                                  height: 80.h,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Text(
+                                'التحديات',
+                                style: TextStyle(color: AppColor.white,
+                                  fontSize: 60.sp,
+                                  overflow: TextOverflow.ellipsis,),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20.h,),
+                          Container(
+                            padding: EdgeInsetsDirectional.all(20.w),
+                            decoration: BoxDecoration(
+                              color: AppColor.backgroundColor,
+                              borderRadius: BorderRadius.circular(25.r),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  padding: EdgeInsetsDirectional.all(20.w),
+                                  decoration: BoxDecoration(color: AppColor.foregroundColor,
+                                      borderRadius: BorderRadius.circular(25.r)),
+                                  child: Image.asset('assets/images/quiz/skill-development.png',
+                                    color: AppColor.white,width: 80.w,height: 80.h,fit: BoxFit.cover,),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'اختبر معلوماتك',
+                                      style: TextStyle(
+                                        color: AppColor.foregroundColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 50.sp,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Text(
+                                      'تحديات حماسية , مستويات متعددة',
+                                      style: TextStyle(
+                                        color: AppColor.foregroundColor,
+                                        fontSize: 45.sp,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                CircleAvatar(
+                                  backgroundColor: AppColor.foregroundColor,
+                                  radius: 40.r,
+                                  child: Center(
+                                      child: Icon(
+                                        Icons.keyboard_arrow_right_rounded,
+                                        color: AppColor.white,
+                                      )),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-
+                SizedBox(height: 30.h,),
+                //Last Read and Last Listen Section
+                Row(
+                  children: [
+                    Expanded(
+                        child: Container(
+                          padding: EdgeInsetsDirectional.symmetric(
+                              vertical: 20.h, horizontal: 40.w),
+                          decoration: BoxDecoration(
+                            color: AppColor.foregroundColor,
+                            borderRadius: BorderRadius.circular(25.r),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/headphones.png',
+                                    width: 80.w,
+                                    height: 80.h,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  SizedBox(
+                                    width: 30.w,
+                                  ),
+                                  Text(
+                                    'إستماعي',
+                                    style: TextStyle(
+                                      color: AppColor.white,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    ' سورة ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 50.sp,
+                                      fontWeight: FontWeight.w700,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' ${SettingsCubit.get(context).getSurahName(SharedHelper.get(key: SharedKeys.audioNumber))} ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 50.sp,
+                                      fontWeight: FontWeight.w700,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Text(
+                                ' الشيخ مشاري راشد ',
+                                style: TextStyle(
+                                  color: AppColor.white,
+                                  fontSize: 40.sp,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20.r),
+                                      ),
+                                      backgroundColor:
+                                      AppColor.lightBlueGrey,//0xf060957F
+                                      padding: EdgeInsetsDirectional.zero),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AudioSurahScreen(
+                                              surahModel: QuranCubit.get(context)
+                                                  .surahsNameAndAyah[
+                                              SharedHelper.get(
+                                                  key: SharedKeys
+                                                      .audioNumber) -
+                                                  1]),
+                                        ));
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'تشغيل',
+                                        style: TextStyle(
+                                          color: AppColor.white,
+                                          fontSize: 50.sp,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                      Icon(
+                                        Icons.play_circle_rounded,
+                                        color: AppColor.white,
+                                        textDirection: TextDirection.ltr,
+                                      ),
+                                    ],
+                                  )),
+                            ],
+                          ),
+                        )),
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Expanded(
+                        child: Container(
+                          padding: EdgeInsetsDirectional.symmetric(
+                              vertical: 20.h, horizontal: 40.w),
+                          decoration: BoxDecoration(
+                            color: AppColor.foregroundColor,
+                            borderRadius: BorderRadius.circular(25.r),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/holy-quran.png',
+                                    width: 80.w,
+                                    height: 80.h,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  SizedBox(
+                                    width: 30.w,
+                                  ),
+                                  Text(
+                                    'قراءتي',
+                                    style: TextStyle(
+                                      color: AppColor.white,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    ' سورة ',
+                                    style: TextStyle(
+                                      color: AppColor.white,
+                                      fontSize: 50.sp,
+                                      fontWeight: FontWeight.w700,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' ${SettingsCubit.get(context).getSurahName(getPageData(SharedHelper.get(key: SharedKeys.savedPage)).last["surah"])} ',
+                                    style: TextStyle(
+                                      color: AppColor.white,
+                                      fontSize: 50.sp,
+                                      fontWeight: FontWeight.w700,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    ' الصفحة ',
+                                    style: TextStyle(
+                                      color: AppColor.white,
+                                      fontSize: 40.sp,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' ${QuranCubit.get(context).convertToArabicNumbers(SharedHelper.get(key: SharedKeys.savedPage).toString())} ',
+                                    style: TextStyle(
+                                      color: AppColor.white,
+                                      fontSize: 40.sp,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20.r),
+                                      ),
+                                      backgroundColor:
+                                      AppColor.lightBlueGrey, //0xf060957F
+                                      padding: EdgeInsetsDirectional.zero),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MushafScreen(
+                                            pageIndex: SharedHelper.get(
+                                                key: SharedKeys.savedPage),
+                                          ),
+                                        ));
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'متابعة',
+                                        style: TextStyle(
+                                          color: AppColor.white,
+                                          fontSize: 50.sp,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_rounded,
+                                        color: AppColor.white,
+                                      ),
+                                    ],
+                                  )),
+                            ],
+                          ),
+                        )),
+                  ],
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                ///Still Need Implement Notification logic -> Setting Cubit
+                //Notification Section
+                Container(
+                  padding: EdgeInsetsDirectional.all(20.w),
+                  decoration: BoxDecoration(
+                    color: AppColor.foregroundColor,
+                    borderRadius: BorderRadius.circular(25.r),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.notifications_active_rounded,color:AppColor.backgroundColor,),
+                          // Image.asset('assets/images/notification.png',
+                          // width: 80.w,height: 80.h,fit: BoxFit.cover,),
+                          SizedBox(width: 20.w,),
+                          Text('الإشعارات',style: TextStyle(
+                            color: AppColor.white,
+                            fontSize: 60.sp,
+                            overflow: TextOverflow.ellipsis,
+                          ),),
+                        ],
+                      ),
+                      CupertinoSwitch(
+                          inactiveTrackColor: AppColor.backgroundColor,
+                          activeTrackColor: AppColor.backgroundColor,
+                          inactiveThumbColor: Colors.grey[600],
+                          thumbColor: AppColor.foregroundColor,
+                          value: cubit.isActive,
+                          onChanged: (value) {
+                            cubit.changeNotificationStatus();
+                          })
+                    ],
+                  ),
+                ),
               ],
             );
           },
         ),
       ),
-
     );
   }
 }

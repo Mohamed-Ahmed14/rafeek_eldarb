@@ -16,7 +16,7 @@ class ChallengeWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsetsDirectional.all(40.w),
       decoration: BoxDecoration(
-        color: AppColor.white,
+        color: AppColor.foregroundColor,
         borderRadius: BorderRadius.circular(40.r),
       ),
       child: Column(
@@ -28,7 +28,7 @@ class ChallengeWidget extends StatelessWidget {
               Container(
                 padding: EdgeInsetsDirectional.all(40.w),
                 decoration: BoxDecoration(
-                  color: Color(0xffd4b996),
+                  color: Color(0xffd4b996), //0xffd4b996
                   borderRadius: BorderRadius.circular(20.r),
                 ),child: Text((challengeIndex+1).toString(),style: TextStyle(
                   color: AppColor.foregroundColor,
@@ -36,20 +36,24 @@ class ChallengeWidget extends StatelessWidget {
               ),),
               ),
               Text("${cubit.challengesDetails[challengeIndex].category}",style: TextStyle(
-                  color: AppColor.black,
-                  fontWeight: FontWeight.w700
+                  color: Color(0xffd4b996),
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis
               ),),
               IconButton(onPressed: (){
-                //Get challenge Data
+                //if challenge is locked can't get its questions
+                if(challengeIndex > (cubit.userData?.challengesPassed ?? 1)){
+                  return;
+                }
+                //Get challenge Data (index + 1 ) challenges starts from 1 in FireStore
                 ChallengeCubit.get(context).getChallengeData(challengeIndex + 1);
                 //Init The challenge
                 ChallengeCubit.get(context).initChallenge();
                 ///Implement navigator to challenge screen
-                Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionScreen(
-                  challengeIndex: challengeIndex,
-                ),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionScreen(),));
               },
-                  icon: Icon(FontAwesomeIcons.solidCirclePlay,color: AppColor.foregroundColor,))
+                  icon: Icon(challengeIndex <= ((cubit.userData?.challengesPassed ?? 1)) ?
+                  FontAwesomeIcons.solidCirclePlay:FontAwesomeIcons.lock,color: Color(0xffd4b996),))
             ],
           ),
           SizedBox(height:20.h ,),
@@ -65,7 +69,9 @@ class ChallengeWidget extends StatelessWidget {
                   Icon(Icons.help_rounded,textDirection: TextDirection.ltr,color: Color(0xffd4b996),),
                   SizedBox(width: 5.w,),
                   Text("10 أسئلة",style: TextStyle(
-                    color: Color(0xffd4b996),
+                    color: Color(0xffD4A990),//0xffd4b996
+                    fontWeight: FontWeight.w700,
+                      overflow: TextOverflow.ellipsis
                   ),)
                 ],
               ),
@@ -75,6 +81,8 @@ class ChallengeWidget extends StatelessWidget {
                   SizedBox(width: 5.w,),
                   Text("2:30 دقائق",style: TextStyle(
                     color: Color(0xffd4b996),
+                      fontWeight: FontWeight.w700,
+                      overflow: TextOverflow.ellipsis
                   ),)
                 ],
               ),
@@ -84,6 +92,8 @@ class ChallengeWidget extends StatelessWidget {
                   SizedBox(width: 5.w,),
                   Text("${cubit.challengesDetails[challengeIndex].challengePoints ?? "50"} نقطة ",style: TextStyle(
                     color: Color(0xffd4b996),
+                      fontWeight: FontWeight.w700,
+                      overflow: TextOverflow.ellipsis
                   ),)
                 ],
               ),

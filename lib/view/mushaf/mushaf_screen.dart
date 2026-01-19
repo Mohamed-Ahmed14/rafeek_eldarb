@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,10 +47,10 @@ class _MushafScreenState extends State<MushafScreen> {
                   cubit.changeAppBarStatus();
                 },
                 child: Scaffold(
-                  backgroundColor: Colors.brown[100],
+                  backgroundColor: AppColor.backgroundColor,
                   appBar: !cubit.isVisible ?
                   AppBar(
-                    backgroundColor: Colors.brown[100],
+                    backgroundColor: AppColor.backgroundColor,
                     elevation: 0.8,
                     toolbarHeight: 100.h,
                     leadingWidth: 200.w,
@@ -73,7 +72,7 @@ class _MushafScreenState extends State<MushafScreen> {
                     leading: IconButton(onPressed:(){
                       Navigator.pop(context);
                     },
-                      icon: Icon(Icons.arrow_back_ios_rounded,size: 60.sp,),color: Colors.teal,),
+                      icon: Icon(Icons.arrow_back_ios_rounded,size: 60.sp,),color:AppColor.foregroundColor,),
                     actions: [
                       IconButton(onPressed:() {
                         cubit.changeTextMode();
@@ -86,7 +85,7 @@ class _MushafScreenState extends State<MushafScreen> {
                         }
                       },
                           icon: Icon(Icons.wrap_text_rounded,
-                            color: cubit.isSingleLine ? Colors.teal : Colors.brown[700],)),
+                            color: cubit.isSingleLine ? AppColor.foregroundColor : Colors.brown[700],)),
                       SizedBox(width: 10.w,),
                     ],
                   ),
@@ -119,7 +118,7 @@ class _MushafScreenState extends State<MushafScreen> {
                               },
                               itemCount: cubit.data.length,):
                             Container(
-                              margin: EdgeInsetsDirectional.all(10.sp),
+                              margin: EdgeInsetsDirectional.all(20.w),
                               child: ListView(
                                 shrinkWrap: true,
                                 padding: cubit.pageIndex <= 2 ? EdgeInsetsDirectional.only(
@@ -166,7 +165,7 @@ class _MushafScreenState extends State<MushafScreen> {
                                                     color: AppColor.foregroundColor,
                                                   ),textAlign: TextAlign.center,),
                                                 ),duration: Duration(seconds: 2),
-                                                backgroundColor: Color(0xffd4b9A8),
+                                                backgroundColor:AppColor.backgroundColor ,//Color(0xffd4b9A8)
                                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                                 padding: EdgeInsetsDirectional.all(0),),
                                               );

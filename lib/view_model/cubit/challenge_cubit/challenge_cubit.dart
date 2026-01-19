@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rafeek_eldarb/model/challenges/challenge_model.dart';
@@ -38,12 +36,12 @@ class ChallengeCubit extends Cubit<ChallengeState>{
     //First Check Internet Connection
     bool isConnected = await isInternetConnected();
     if(!isConnected){
-      print("No Internet Connection");
+      //print("No Internet Connection");
       emit(NoInternetConnectionState());
       return;
     }
     else{
-      print("Internet Connection Available");
+      //print("Internet Connection Available");
       //Second Check if user is signed in and have uid stored in shared preference
       String? uid = await SharedHelper.get(key: SharedKeys.uid);
       if(uid == null) {
@@ -62,7 +60,7 @@ class ChallengeCubit extends Cubit<ChallengeState>{
     try{
       final userCredential = await auth.signInAnonymously();
       //check created
-      print(userCredential.user!.uid);
+      //print(userCredential.user!.uid);
       await SharedHelper.set(key: SharedKeys.uid, value: userCredential.user!.uid);
       ///create doc in fireStore users collection
       String? uid = await SharedHelper.get(key: SharedKeys.uid);
@@ -74,11 +72,11 @@ class ChallengeCubit extends Cubit<ChallengeState>{
         );
         await createUserInitialData(user.toJson());
       }
-      print("SignInAnonymouslySuccess");
-      print(auth.currentUser!.uid);
+      //print("SignInAnonymouslySuccess");
+      //print(auth.currentUser!.uid);
       emit(SignInAnonymouslySuccessState());
     }catch (e){
-      print("error in signInAnonymously: $e");
+      //print("error in signInAnonymously: $e");
       emit(SignInAnonymouslyErrorState());
     }
   }
@@ -88,10 +86,10 @@ class ChallengeCubit extends Cubit<ChallengeState>{
     try{
       String uid = await SharedHelper.get(key: SharedKeys.uid);
       await fs.collection(SharedKeys.users).doc(uid).set(data);
-      print("Create user doc successfully");
+      //print("Create user doc successfully");
       emit(CreateUserDataSuccessState());
     }catch(e){
-      print("Error creating userData");
+      //print("Error creating userData");
       emit(CreateUserDataErrorState());
     }
   }
@@ -107,7 +105,7 @@ Future<void> getUserDataFireStore() async{
     }
     try{
       await fs.collection(SharedKeys.users).doc(uid).get().then((value){
-        print(value.data());
+        //print(value.data());
         if(value.data() != null){
           userData = UserModel.fromJson(value.data()!);
         }
@@ -119,14 +117,14 @@ Future<void> getUserDataFireStore() async{
       //     }
       //   }
       // });
-      print("Get user Data Successfully");
-      print(userData!.uid);
-      print(userData!.totalScore);
-      print(userData!.challengesPassed);
+      //print("Get user Data Successfully");
+      //print(userData!.uid);
+      //print(userData!.totalScore);
+      //print(userData!.challengesPassed);
       await getAllChallengesDetails();
       emit(GetUserDataSuccessState());
     }catch(e){
-      print("Error Getting User Data");
+      //print("Error Getting User Data");
       emit(GetUserDataErrorState());
     }
 }
@@ -138,7 +136,7 @@ Future<void> getUserDataFireStore() async{
       await auth.signOut();
       emit(SignOutAnonymouslySuccessState());
     }catch (e){
-      print("error in signInAnonymously: $e");
+      //print("error in signInAnonymously: $e");
       emit(SignOutAnonymouslyErrorState());
     }
   }
@@ -178,7 +176,7 @@ Future<void> getChallengeData(int challengeID) async{
     });
     emit(GetChallengeDataSuccessState());
   }catch(e){
-    print(e.toString());
+    //print(e.toString());
     emit(GetChallengeDataErrorState());
   }
 }
@@ -198,7 +196,7 @@ List<ChallengeModel> challengesDetails = [];
       }
     });
   }catch(e){
-    print(e.toString());
+    //print(e.toString());
     emit(GetChallengesDetailsErrorState());
   }
 }
@@ -281,7 +279,7 @@ if(remainingSeconds == 1){
   //Time Passed Go to next question
   userAns = "None";
   checkAns("wrong");
-  print("Not Answer");
+  //print("Not Answer");
   isTimeFinish = true;
   emit(TimeUpState());
 }else{
@@ -320,7 +318,7 @@ Future<void> updateChallengeScore() async{
     await updateUserData();
     emit(UpdateChallengeScoreSuccessState());
   }catch(e){
-    print(e.toString());
+    //print(e.toString());
     emit(UpdateChallengeScoreErrorState());
   }
 
@@ -350,7 +348,7 @@ Future<void> updateUserData() async{
     });
 
   }catch(e){
-    print(e.toString());
+    //print(e.toString());
     emit(UpdateUserDataErrorState());
   }
 }
@@ -367,7 +365,7 @@ Future<int> getAllScores(String uid) async{
     });
     return totalScore;
   }catch(e){
-    print(e.toString());
+    //print(e.toString());
   }
   return totalScore;
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeek_eldarb/view/azkar/azkar_widget.dart';
 import 'package:rafeek_eldarb/view_model/cubit/azkar_cubit/azkar_cubit.dart';
 import 'package:rafeek_eldarb/view_model/utils/app_colors.dart';
 
-import '../../view_model/cubit/azkar_cubit/azkar_state.dart';
 
 
 class AzkarScreen extends StatelessWidget {

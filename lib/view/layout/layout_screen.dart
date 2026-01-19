@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_state.dart';
 
-
 class LayoutScreen extends StatefulWidget {
 
   const LayoutScreen({super.key});
@@ -19,8 +18,11 @@ class _LayoutScreenState extends State<LayoutScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     //comment that line when debug with emulator
-    //QuranCubit.get(context).checkForUpdate();
+    QuranCubit.get(context).checkForUpdate();
+
+
   }
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
               items: [
                 TabItem(icon: Image.asset('assets/images/dua.png'),title: ' بروفايل '),
                 TabItem(icon: Image.asset('assets/images/arabic.png'),title: ' الأذكار ',),
-                TabItem(icon: Image.asset('assets/images/holy-quran.png'),title: ' المصحف '),
+                TabItem(icon: Image.asset('assets/images/holy-quran.png'),title: ' الرئيسية '),
                 TabItem(icon: Image.asset('assets/images/audio5.png'),title: ' إستماع ',),
                 TabItem(icon: Image.asset('assets/images/calendar.png'),title: ' الصلاة ',),
               ],

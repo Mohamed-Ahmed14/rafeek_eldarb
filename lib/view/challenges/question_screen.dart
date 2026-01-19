@@ -11,9 +11,7 @@ import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_state.d
 import '../../view_model/utils/app_colors.dart';
 
 class QuestionScreen extends StatefulWidget {
-  final int challengeIndex;
-
-  const QuestionScreen({required this.challengeIndex, super.key});
+  const QuestionScreen({super.key});
 
   @override
   State<QuestionScreen> createState() => _QuestionScreenState();
@@ -225,7 +223,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       //Button to navigate to next question or get result
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.tealAccent[700],
+                              backgroundColor: AppColor.lightGreen,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.r),
                               )),
@@ -253,7 +251,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             children: [
                               Text(
                                 'التالي',
-                                style: TextStyle(color: AppColor.black),
+                                style: TextStyle(color: AppColor.black,
+                                fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
                                 width: 20.w,

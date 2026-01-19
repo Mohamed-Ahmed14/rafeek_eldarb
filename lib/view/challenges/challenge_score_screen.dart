@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rafeek_eldarb/view/challenges/challenge_screen.dart';
+import 'package:rafeek_eldarb/view/challenges/question_screen.dart';
 import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_state.dart';
 import '../../view_model/utils/app_colors.dart';
@@ -48,7 +49,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                       SizedBox(height: 40.h,),
                       //Total points
                       Text('مجموع النقاط',style: TextStyle(
-                          color: Colors.white54,
+                          color: Colors.white70,
                           fontWeight: FontWeight.w600
                       ),),
                       Text('${ChallengeCubit.get(context).userChallengePoints}',style: TextStyle(
@@ -104,7 +105,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                   SizedBox(height: 10.h,),
                                   Text('النتيجة',style: TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      color: Colors.white38
+                                      color: Colors.white54
                                   ),),
                                 ],
                               ),
@@ -137,7 +138,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                   SizedBox(height: 10.h,),
                                   Text('الوقت المستغرق',style: TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      color: Colors.white38
+                                      color: Colors.white54
                                   ),),
                                 ],
                               ),
@@ -174,7 +175,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                   SizedBox(height: 10.h,),
                                   Text('إجابات صحيحة',style: TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      color: Colors.white38
+                                      color: Colors.white54
                                   ),),
                                 ],
                               ),
@@ -206,7 +207,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                   SizedBox(height: 10.h,),
                                   Text('إجابات خاطئة',style: TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      color: Colors.white38
+                                      color: Colors.white54
                                   ),),
                                 ],
                               ),
@@ -219,12 +220,21 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                       //PLay Again
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey[800],
+                              backgroundColor: Colors.black,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.r),
                               )
                           ),
-                          onPressed: (){},
+                          onPressed: (){
+                            var cubit = ChallengeCubit.get(context);
+                            //Init the challenge
+                            cubit.initChallenge();
+                            //Get data challenge data
+                            cubit.getChallengeData(cubit.challengeNumber);
+                            //Navigate To QuestionScreen
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (context) => QuestionScreen(),));
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -239,7 +249,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                       //Button to navigate to challenges screen
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.tealAccent[700],
+                              backgroundColor: AppColor.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.r),
                               )

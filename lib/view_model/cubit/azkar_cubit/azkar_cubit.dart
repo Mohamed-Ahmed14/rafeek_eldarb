@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rafeek_eldarb/model/azkar_model.dart';
 import 'azkar_state.dart';
 
 class AzkarCubit extends Cubit<AzkarState>{

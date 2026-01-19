@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quran/quran.dart';
-
-import '../../view_model/cubit/audio_cubit/audio_cubit.dart';
 import '../../view_model/utils/app_colors.dart';
 import 'audio_surah_screen.dart';
 
@@ -30,7 +27,7 @@ class AudioWidget extends StatelessWidget {
             //Icon(Icons.multitrack_audio_outlined,color: Colors.white,),
             Image.asset('assets/images/headphone.png',width: 100.w,height: 100.w,fit: BoxFit.cover,),
             Text('سورة ${surahModel["surahNameArabic"]}',style: TextStyle(color: Colors.white,
-            fontSize: 50.sp,fontWeight: FontWeight.bold),),
+            fontSize: 50.sp,fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis),),
           ],
         ),
       ),

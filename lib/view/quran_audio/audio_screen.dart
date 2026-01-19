@@ -1,8 +1,8 @@
-import 'package:easy_localization/easy_localization.dart' as local;
+//import 'package:easy_localization/easy_localization.dart' as local;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quran/surah_data.dart';
+
 
 import 'package:rafeek_eldarb/view/quran_audio/audio_widget.dart';
 
@@ -11,7 +11,7 @@ import 'package:rafeek_eldarb/view_model/utils/app_colors.dart';
 import '../../view_model/cubit/quran_cubit/quran_cubit.dart';
 import '../../view_model/cubit/quran_cubit/quran_state.dart';
 
-import 'package:flutter/widgets.dart';
+
 
 
 
@@ -32,7 +32,8 @@ class AudioScreen extends StatelessWidget {
             backgroundColor: AppColor.foregroundColor,
             title: Text(
               'الشيخ مشاري راشد العفاسي',
-              style: TextStyle(color: AppColor.white),
+              style: TextStyle(color: AppColor.white,
+              overflow: TextOverflow.ellipsis),
             ),
             actions: [
               SizedBox(width: 20.w,),
@@ -60,6 +61,10 @@ class AudioScreen extends StatelessWidget {
                           cubit.searchAudioNode.unfocus();
                         },
                         decoration: InputDecoration(
+                          hintText: 'اكتب اسم السورة',
+                          hintStyle: TextStyle(
+                            color: AppColor.foregroundColor,
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.r),
                             borderSide: BorderSide(

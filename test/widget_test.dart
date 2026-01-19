@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:rafeek_eldarb/main.dart';
 import 'package:rafeek_eldarb/my_app.dart';
 
 void main() {

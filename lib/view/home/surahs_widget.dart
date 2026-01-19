@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quran/quran.dart';
+
 import 'package:rafeek_eldarb/view/mushaf/mushaf_screen.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 
@@ -15,7 +15,7 @@ class SurahsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       borderRadius: BorderRadius.circular(12.r),
-      color: Colors.teal[900],
+     color: AppColor.foregroundColor,
       child: InkWell(
         borderRadius: BorderRadius.circular(12.r),
         onTap: () {
@@ -27,10 +27,9 @@ class SurahsWidget extends StatelessWidget {
 
         },
         child: Container(
-          padding: EdgeInsetsDirectional.all(15.sp),
+          padding: EdgeInsetsDirectional.all(20.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
-
           ),
           child: Row(
             children: [

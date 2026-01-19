@@ -20,7 +20,7 @@ class ChoiceWidget extends StatelessWidget {
         return Material(
           //color: (cubit.isSelected && optionNum == cubit.userAns && cubit.isRight)?Colors.green:
           //(cubit.isSelected && optionNum == cubit.userAns && !cubit.isRight)?Colors.red:Color(0xffd4b996),
-         color: (cubit.isSelected && optionNum == cubit.userAns)?bgColor: Color(0xffd4b996),
+         color: (cubit.isSelected && optionNum == cubit.userAns)?bgColor: Color(0xffd4B086),
           borderRadius: BorderRadius.circular(20.r),
           child: InkWell(
             borderRadius: BorderRadius.circular(20.r),
@@ -37,7 +37,7 @@ class ChoiceWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.r),
               ),child: Text(optionValue??"",style: TextStyle(
               color: AppColor.white,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.bold,
             ),textAlign: TextAlign.center,),
             ),
           ),

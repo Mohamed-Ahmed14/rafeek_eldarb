@@ -1,5 +1,3 @@
-import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
-
 abstract class QuranState{}
 
 class QuranInitState extends QuranState{}

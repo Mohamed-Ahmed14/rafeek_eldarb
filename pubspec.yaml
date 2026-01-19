@@ -52,6 +52,7 @@ dependencies:
   firebase_auth: ^6.1.3
   font_awesome_flutter: ^10.9.1
   cloud_firestore: ^6.1.1
+  carousel_slider: ^5.1.1
 
 
 dev_dependencies:
@@ -102,6 +103,7 @@ flutter:
     - assets/translations/
     - assets/images/
     - assets/images/quiz/
+    - assets/images/slider/
     - assets/images/mosque.jpg
 
   #   - images/a_dot_ham.jpeg

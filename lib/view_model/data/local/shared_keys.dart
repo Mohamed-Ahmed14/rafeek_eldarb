@@ -14,4 +14,5 @@ class SharedKeys{
   static const String challenges = 'challenges';
   static const String questions = 'questions';
   static const String scores = 'scores';
+  static const String message = 'message';
 }

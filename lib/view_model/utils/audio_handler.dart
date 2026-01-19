@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../main.dart';
 
 class AudioPlayerHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
  final  AudioPlayer _player = AudioPlayer();

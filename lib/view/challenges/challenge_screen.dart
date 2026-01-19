@@ -160,7 +160,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                     ),
                     SizedBox(height: 10.h,),
                     LinearProgressIndicator(
-                      value: (cubit.userData?.challengesPassed??0)/50,
+                      value: (cubit.userData?.challengesPassed??0)/cubit.challengesDetails.length,
                       backgroundColor: Colors.black,
                       color: Color(0xffd4b996),
                       borderRadius: BorderRadius.circular(20.r),
@@ -170,19 +170,22 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                   ],
                 ),
                 ),
+                //Total challenges
                 Padding(
                   padding:  EdgeInsetsDirectional.symmetric(horizontal: 20.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("التحديات المتاحة",style: TextStyle(
-                          color: AppColor.foregroundColor
+                      Text("أبرز التحديات",style: TextStyle(
+                          color: AppColor.foregroundColor,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis
                       ),),
                       Row(
                         children: [
                           Text("عرض الكل",
                             style: TextStyle(
-                                color: Colors.grey[700]
+                                color: AppColor.black,overflow: TextOverflow.ellipsis
                             ),),
                           IconButton(style: IconButton.styleFrom(
                               padding: EdgeInsetsDirectional.zero
@@ -190,13 +193,14 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => AllChallengesScreen(),));
                           },
                               icon: Icon(Icons.arrow_forward_ios_rounded,
-                                color: Colors.grey[700],size: 15,))
+                                color: AppColor.black,size: 15,))
                         ],
                       )
 
                     ],
                   ),
                 ),
+                //Famous Challenges
                 Expanded(
                   child: ListView.separated(
                       padding: EdgeInsetsDirectional.all(20.w),

@@ -21,7 +21,8 @@ Future<void> main() async{
     return const Center(
       child: Text(
         'حدث خطأ ما برجاء المحاولة مرة اخري',
-        style: TextStyle(color: Colors.red),
+        style: TextStyle(color: Colors.black,
+        fontWeight: FontWeight.bold),
       ),
     );
   };
@@ -34,7 +35,7 @@ Future<void> main() async{
   DioHelper.init();
   await Defaults.appDefaultInitialization();
   //comment that line when debug with emulator
- // await initAudioHandler();
+  await initAudioHandler();
 
   //Test
  // SharedHelper.remove(key: 'uid');

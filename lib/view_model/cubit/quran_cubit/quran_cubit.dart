@@ -1,23 +1,15 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:rafeek_eldarb/model/mushaf_model.dart';
-import 'package:rafeek_eldarb/model/quran_surahs_model.dart';
-import 'package:rafeek_eldarb/model/surah_model.dart';
 import 'package:rafeek_eldarb/view/home/home_screen.dart';
-import 'package:rafeek_eldarb/view/mushaf/mushaf_screen.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_state.dart';
 import 'package:rafeek_eldarb/view_model/data/local/shared_helper.dart';
 import 'package:rafeek_eldarb/view_model/data/local/shared_keys.dart';
-import 'package:rafeek_eldarb/view_model/data/network/dio_helper.dart';
-import 'package:rafeek_eldarb/view_model/data/network/end_points.dart';
 import 'package:rafeek_eldarb/view_model/utils/app_colors.dart';
 import 'package:quran/quran.dart' as quran;
-
 import '../../../view/azkar/azkar_categories_screen.dart';
-import '../../../view/azkar/azkar_screen.dart';
 import '../../../view/prayer_times/prayer_times_screen.dart';
 import '../../../view/quran_audio/audio_screen.dart';
 import '../../../view/settings/settings_screen.dart';
@@ -103,7 +95,7 @@ class QuranCubit extends Cubit<QuranState>{
   }
 
   ///First Text Mode (Single Line)
-  ///List<dynamic> to contain surahs number and Verses in the page
+  ///List`<dynamic>` to contain surahs number and Verses in the page
   ///each verse is also a List of String and end Verse symbol
   List<dynamic> pageDetails = [];
   List<dynamic> data = [];
