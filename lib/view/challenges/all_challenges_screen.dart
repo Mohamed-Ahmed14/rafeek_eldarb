@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rafeek_eldarb/view/challenges/challenge_screen.dart';
 import 'package:rafeek_eldarb/view/challenges/challenge_widget.dart';
 import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_cubit.dart';
 
@@ -26,8 +25,8 @@ class AllChallengesScreen extends StatelessWidget {
                     padding: EdgeInsetsDirectional.zero,
                   ),
                   onPressed: (){
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),),
-                        (route) => false,);
+                    Navigator.pop(context);
+                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),));
                   },
                   icon: Icon(Icons.arrow_back_rounded,color: AppColor.white,)),
             ),

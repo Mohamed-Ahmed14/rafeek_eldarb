@@ -37,6 +37,7 @@ class ChallengeWidget extends StatelessWidget {
               ),
               Text("${cubit.challengesDetails[challengeIndex].category}",style: TextStyle(
                   color: Color(0xffd4b996),
+                  fontSize: 55.sp,
                   fontWeight: FontWeight.bold,
                   overflow: TextOverflow.ellipsis
               ),),
@@ -53,7 +54,7 @@ class ChallengeWidget extends StatelessWidget {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionScreen(),));
               },
                   icon: Icon(challengeIndex <= ((cubit.userData?.challengesPassed ?? 1)) ?
-                  FontAwesomeIcons.solidCirclePlay:FontAwesomeIcons.lock,color: Color(0xffd4b996),))
+                  FontAwesomeIcons.solidCirclePlay:FontAwesomeIcons.lock,color: Color(0xffd4b996),size: 80.w,))
             ],
           ),
           SizedBox(height:20.h ,),
@@ -69,7 +70,7 @@ class ChallengeWidget extends StatelessWidget {
                   Icon(Icons.help_rounded,textDirection: TextDirection.ltr,color: Color(0xffd4b996),),
                   SizedBox(width: 5.w,),
                   Text("10 أسئلة",style: TextStyle(
-                    color: Color(0xffD4A990),//0xffd4b996
+                    color: Color(0xffd4b996),//0xffd4b996
                     fontWeight: FontWeight.w700,
                       overflow: TextOverflow.ellipsis
                   ),)

@@ -7,6 +7,7 @@ import 'package:rafeek_eldarb/view_model/cubit/prayer_cubit/prayer_cubit.dart';
 import 'package:rafeek_eldarb/view_model/utils/app_colors.dart';
 
 import '../../view_model/cubit/prayer_cubit/prayer_state.dart';
+import '../settings/adaptiveBannerAd_widget.dart';
 
 class PrayerTimesScreen extends StatefulWidget {
   const PrayerTimesScreen({super.key});
@@ -122,7 +123,8 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                      ListView.separated(
                        shrinkWrap: true,
                        itemBuilder: (context, index) {
-                         return PrayerTimesWidget(time: PrayerCubit.get(context).times[index]);
+                         return PrayerTimesWidget(time: PrayerCubit.get(context).times[index],
+                           prayerIndex: index,);
                        },
                        separatorBuilder: (context, index) {
                          return SizedBox(height: 20.h,);
@@ -135,6 +137,9 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                        style: TextStyle(color: AppColor.foregroundColor),
                        textAlign: TextAlign.center,
                      ),
+                     SizedBox(height: 30.h,),
+                     AdaptiveBannerAd(),
+                     SizedBox(height: 30.h,),
                    ],
                  ),
                ),

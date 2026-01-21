@@ -2,6 +2,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:rafeek_eldarb/my_app.dart';
 import 'package:rafeek_eldarb/view_model/data/local/shared_helper.dart';
@@ -15,6 +16,7 @@ import 'firebase_options.dart';
   AudioHandler? audioHandler;
 
 Future<void> main() async{
+
 
   //To prevent red screen error from appear
   ErrorWidget.builder = (FlutterErrorDetails details) {
@@ -35,10 +37,13 @@ Future<void> main() async{
   DioHelper.init();
   await Defaults.appDefaultInitialization();
   //comment that line when debug with emulator
-  await initAudioHandler();
+ await initAudioHandler();
 
   //Test
  // SharedHelper.remove(key: 'uid');
+
+//Google ads
+  await MobileAds.instance.initialize();
 
 
   /// to generate keys for localization

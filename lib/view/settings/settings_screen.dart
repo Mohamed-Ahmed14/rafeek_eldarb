@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quran/quran.dart';
 import 'package:rafeek_eldarb/view/mushaf/mushaf_screen.dart';
 import 'package:rafeek_eldarb/view/quran_audio/audio_surah_screen.dart';
@@ -14,10 +15,42 @@ import 'package:rafeek_eldarb/view_model/utils/app_colors.dart';
 
 import '../../view_model/cubit/settings_cubit/settings_state.dart';
 import '../challenges/challenge_screen.dart';
+import 'adaptiveBannerAd_widget.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+
+  // late BannerAd? _bannerAd;
+  // bool _isBannerLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // _bannerAd = BannerAd(
+    //   size: AdSize.banner,
+    //   adUnitId: 'ca-app-pub-3940256099942544/6300978111', // TEST Unit ID
+    //   request: const AdRequest(),
+    //   listener: BannerAdListener(
+    //     onAdLoaded: (ad) {
+    //       setState(() {
+    //         _isBannerLoaded = true;
+    //       });
+    //     },
+    //     onAdFailedToLoad: (ad, error) {
+    //       ad.dispose();
+    //     },
+    //   ),
+    // );
+    //
+    // _bannerAd?.load();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -500,6 +533,17 @@ class SettingsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+
+                SizedBox(height: 30.h,),
+                //AdaptiveBannerAd(),
+                SizedBox(height: 30.h,),
+                //Google Ads
+                // if (_isBannerLoaded && _bannerAd != null)
+                //   SizedBox(
+                //     width: _bannerAd?.size.width.toDouble(),
+                //     height: _bannerAd?.size.height.toDouble(),
+                //     child: AdWidget(ad: _bannerAd!),
+                //   ),
               ],
             );
           },

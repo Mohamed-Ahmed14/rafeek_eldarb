@@ -8,6 +8,7 @@ import 'package:rafeek_eldarb/view_model/cubit/challenge_cubit/challenge_state.d
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 
 import '../../view_model/utils/app_colors.dart';
+import '../settings/adaptiveBannerAd_widget.dart';
 import 'challenge_widget.dart';
 
 class ChallengeScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
    // ChallengeCubit.get(context).signOutAnonymously();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,8 +46,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 ),
                   onPressed: (){
                   QuranCubit.get(context).updateScreenIndex(0) ;
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LayoutScreen(),),
-                    (route) => false,);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LayoutScreen(),),);
               },
                   icon: Icon(Icons.arrow_back_rounded,color: AppColor.white,)),
             ),
@@ -214,6 +215,10 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                       },
                       itemCount: 3),
                 ),
+                //Ads
+                SizedBox(height: 30.h,),
+                //AdaptiveBannerAd(),
+                SizedBox(height: 30.h,),
               ],
             );
           }
@@ -244,3 +249,5 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
     );
   }
 }
+
+
