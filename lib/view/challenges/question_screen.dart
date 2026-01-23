@@ -228,11 +228,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         //Button to navigate to next question or get result
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColor.lightGreen,
+                              padding: EdgeInsetsDirectional.all(30.w),
+                                backgroundColor: AppColor.lightBlueGrey,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.r),
                                 )),
                             onPressed: () {
+
                               //Temp navigate to result screen
                               if (((cubit.challengeModel?.questions?.length ??
                                       0)-1) ==
@@ -257,7 +259,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                 Text(
                                   'التالي',
                                   style: TextStyle(color: AppColor.black,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 50.sp),
                                 ),
                                 SizedBox(
                                   width: 20.w,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quran/quran.dart';
 import 'package:rafeek_eldarb/view_model/cubit/settings_cubit/settings_state.dart';
@@ -65,10 +66,23 @@ class SettingsCubit extends Cubit<SettingsState>{
   }
 
   ///Notification
- bool isActive = false;
-  void changeNotificationStatus()  {
+ bool isActive = true;
+
+ void initNotificationStatus() async{
+   isActive =  await SharedHelper.get(key: SharedKeys.notificationEnabled) ?? true;
+   emit(GetNotificationStatusState());
+ }
+  void changeNotificationStatus()  async{
     isActive = !isActive;
+    await SharedHelper.set(key: SharedKeys.notificationEnabled, value: isActive);
+    if(isActive){
+      FirebaseMessaging.instance.subscribeToTopic("All");
+    }else{
+      FirebaseMessaging.instance.unsubscribeFromTopic("All");
+    }
     emit(ChangeNotificationStatusState());
   }
+
+
 
 }

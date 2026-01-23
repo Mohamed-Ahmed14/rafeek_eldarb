@@ -173,7 +173,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 ),
                 //Total challenges
                 Padding(
-                  padding:  EdgeInsetsDirectional.symmetric(horizontal: 20.w),
+                  padding:  EdgeInsetsDirectional.symmetric(horizontal: 30.w,vertical: 20.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -182,20 +182,21 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                           fontWeight: FontWeight.bold,
                           overflow: TextOverflow.ellipsis
                       ),),
-                      Row(
-                        children: [
-                          Text("عرض الكل",
-                            style: TextStyle(
-                                color: AppColor.black,overflow: TextOverflow.ellipsis
-                            ),),
-                          IconButton(style: IconButton.styleFrom(
-                              padding: EdgeInsetsDirectional.zero
-                          ),onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AllChallengesScreen(),));
-                          },
-                              icon: Icon(Icons.arrow_forward_ios_rounded,
-                                color: AppColor.black,size: 15,))
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => AllChallengesScreen(),));
+                        },
+                        child: Row(
+                          children: [
+                            Text("عرض الكل",
+                              style: TextStyle(
+                                  color: AppColor.black,overflow: TextOverflow.ellipsis
+                              ),),
+                            Icon(Icons.arrow_forward_ios_rounded,
+                              color: AppColor.black,size: 15,),
+
+                          ],
+                        ),
                       )
 
                     ],
@@ -217,7 +218,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 ),
                 //Ads
                 SizedBox(height: 30.h,),
-                //AdaptiveBannerAd(),
+                AdaptiveBannerAd(),
                 SizedBox(height: 30.h,),
               ],
             );

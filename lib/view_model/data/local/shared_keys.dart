@@ -15,4 +15,7 @@ class SharedKeys{
   static const String questions = 'questions';
   static const String scores = 'scores';
   static const String message = 'message';
+
+  //Firebase FCM
+  static const String notificationEnabled = 'notificationEnabled';
 }

@@ -26,6 +26,13 @@
                 android:value="2" />
         <meta-data android:name="android.media.session.MediaSessionService"
                    android:value="androidx.media3.exoplayer.ExoPlayer" />
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/ic_notification" />
+
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/notification_color" />
         <activity
             android:name="com.ryanheise.audioservice.AudioServiceActivity"
             android:exported="true"

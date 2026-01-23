@@ -13,3 +13,5 @@ class GetMessageErrorState extends SettingsState{}
 
 class ChangeNotificationStatusState extends SettingsState{}
 
+class GetNotificationStatusState extends SettingsState{}
+

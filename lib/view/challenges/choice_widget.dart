@@ -32,12 +32,13 @@ class ChoiceWidget extends StatelessWidget {
             },
             child: Container(
               width: double.infinity,
-              padding: EdgeInsetsDirectional.all(20.w),
+              padding: EdgeInsetsDirectional.all(40.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.r),
               ),child: Text(optionValue??"",style: TextStyle(
               color: AppColor.white,
               fontWeight: FontWeight.bold,
+              fontSize: 55.sp,
             ),textAlign: TextAlign.center,),
             ),
           ),

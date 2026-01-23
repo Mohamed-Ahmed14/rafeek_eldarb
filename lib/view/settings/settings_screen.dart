@@ -32,7 +32,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-
+    //Get Notification Status
+    SettingsCubit.get(context).initNotificationStatus();
     // _bannerAd = BannerAd(
     //   size: AdSize.banner,
     //   adUnitId: 'ca-app-pub-3940256099942544/6300978111', // TEST Unit ID
@@ -535,7 +536,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
 
                 SizedBox(height: 30.h,),
-                //AdaptiveBannerAd(),
+                AdaptiveBannerAd(),
                 SizedBox(height: 30.h,),
                 //Google Ads
                 // if (_isBannerLoaded && _bannerAd != null)
