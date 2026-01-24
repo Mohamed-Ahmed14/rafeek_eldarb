@@ -219,7 +219,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 //Ads
                 SizedBox(height: 30.h,),
                 AdaptiveBannerAd(),
-                SizedBox(height: 30.h,),
+                SizedBox(height: 10.h,),
               ],
             );
           }

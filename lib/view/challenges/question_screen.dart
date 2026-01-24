@@ -349,7 +349,7 @@ Future<bool> _handleBack(BuildContext context) async {
   //ChallengeCubit.get(context).remainingSeconds =1;
   ChallengeCubit.get(context).stopTimer();
   ChallengeCubit.get(context).getUserData();
-  Navigator.pop(context);
+  //Navigator.pop(context);
 
   // لو عايز pushReplacement
   // Navigator.pushReplacement(

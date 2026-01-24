@@ -14,23 +14,23 @@ class AudioCubit extends Cubit<AudioState>{
   static AudioCubit get(context) =>BlocProvider.of<AudioCubit>(context);
 
   //This Part from main
-  AudioHandler? audioHandler;
 
 
-  Future<void> initAudioHandler()async{
-    if(audioHandler != null){
-      audioHandler = null;
-    }
-    audioHandler  = await AudioService.init(
-      builder: () => AudioPlayerHandler(),
-      config: const AudioServiceConfig(
-        androidNotificationChannelId: 'com.ryanheise.myapp.channel.audio',
-        androidNotificationChannelName: 'Audio Playback',
-        androidNotificationIcon: 'mipmap/icon_transparent', // Request focus
-        androidNotificationOngoing: true,
-      ),
-    );
-  }
+
+  // Future<void> initAudioHandler()async{
+  //   if(audioHandler != null){
+  //     audioHandler = null;
+  //   }
+  //   audioHandler  = await AudioService.init(
+  //     builder: () => AudioPlayerHandler(),
+  //     config: const AudioServiceConfig(
+  //       androidNotificationChannelId: 'com.ryanheise.myapp.channel.audio',
+  //       androidNotificationChannelName: 'Audio Playback',
+  //       androidNotificationIcon: 'mipmap/icon_transparent', // Request focus
+  //       androidNotificationOngoing: true,
+  //     ),
+  //   );
+  // }
    //late AudioPlayerHandler audioHandler;
    //AudioPlayerHandler audioPlayerHandler = AudioPlayerHandler();
 

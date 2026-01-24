@@ -323,7 +323,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
 Future<bool> _handleBack(BuildContext context) async {
   // لو عايز pop
   ChallengeCubit.get(context).getUserData();
-  Navigator.pop(context);
+ // Navigator.pop(context);
  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),));
 
   // لو عايز pushReplacement

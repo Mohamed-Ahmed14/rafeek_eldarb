@@ -6,6 +6,7 @@ import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_state.dart';
 
 import '../../view_model/cubit/audio_cubit/audio_cubit.dart';
+import '../../view_model/utils/fcm_notification.dart';
 
 class LayoutScreen extends StatefulWidget {
 
@@ -25,13 +26,16 @@ class _LayoutScreenState extends State<LayoutScreen> {
     QuranCubit.get(context).checkForUpdate();
     //Init Audio Handler in main screen to avoid init it in main
     Future.microtask(() async {
-
-        if(mounted){
-          if(AudioCubit.get(context).audioHandler == null){
-            await AudioCubit.get(context).initAudioHandler();
-          }
-
-        }
+      //Firebase Cloud Messaging FCM
+      await initFCM();
+      //Subscribe To topic "All"
+      checkNotificationStatus();
+        // if(mounted){
+        //   if(AudioCubit.get(context).audioHandler == null){
+        //     await AudioCubit.get(context).initAudioHandler();
+        //   }
+        //
+        // }
 
     });
 

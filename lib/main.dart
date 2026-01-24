@@ -1,5 +1,6 @@
 
 //import 'package:audio_service/audio_service.dart';
+import 'package:audio_service/audio_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -7,19 +8,22 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:rafeek_eldarb/my_app.dart';
 import 'package:rafeek_eldarb/view_model/data/local/shared_helper.dart';
 import 'package:rafeek_eldarb/view_model/data/network/dio_helper.dart';
+import 'package:rafeek_eldarb/view_model/utils/audio_handler.dart';
 //import 'package:rafeek_eldarb/view_model/utils/audio_handler.dart';
 import 'package:rafeek_eldarb/view_model/utils/defaults.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:rafeek_eldarb/view_model/utils/fcm_notification.dart';
 import 'firebase_options.dart';
 
-  //AudioHandler? audioHandler;
+  AudioHandler? audioHandler;
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   //print("Handling a background message: ${message.messageId}");
 }
@@ -47,7 +51,7 @@ Future<void> main() async{
   DioHelper.init();
   await Defaults.appDefaultInitialization();
   //comment that line when debug with emulator
- //await initAudioHandler();
+ await initAudioHandler();
 
   //Test
  // SharedHelper.remove(key: 'uid');
@@ -59,17 +63,14 @@ Future<void> main() async{
       // testDeviceIds: [
       //   'b24f3852-f6ca-4a5f-8684-aecfc6f9a65d',
       // ],
-      tagForChildDirectedTreatment:
-      TagForChildDirectedTreatment.yes,
-      tagForUnderAgeOfConsent:
-      TagForUnderAgeOfConsent.yes,
-      maxAdContentRating: MaxAdContentRating.g,
+      // tagForChildDirectedTreatment:
+      // TagForChildDirectedTreatment.yes,
+      // tagForUnderAgeOfConsent:
+      // TagForUnderAgeOfConsent.yes,
+      // maxAdContentRating: MaxAdContentRating.g,
     ),
   );
-//Firebase Cloud Messaging FCM
-await initFCM();
-//Subscribe To topic "All"
- checkNotificationStatus();
+
 
 
 
@@ -102,18 +103,18 @@ await initFCM();
       child: MyApp()));
 }
 
-// Future<void> initAudioHandler()async{
-//   if(audioHandler != null){
-//     audioHandler = null;
-//   }
-//     audioHandler  = await AudioService.init(
-//       builder: () => AudioPlayerHandler(),
-//       config: const AudioServiceConfig(
-//         androidNotificationChannelId: 'com.ryanheise.myapp.channel.audio',
-//         androidNotificationChannelName: 'Audio Playback',
-//          androidNotificationIcon: 'mipmap/icon_transparent', // Request focus
-//         androidNotificationOngoing: true,
-//       ),
-//     );
-// }
+Future<void> initAudioHandler()async{
+  if(audioHandler != null){
+    audioHandler = null;
+  }
+    audioHandler  = await AudioService.init(
+      builder: () => AudioPlayerHandler(),
+      config: const AudioServiceConfig(
+        androidNotificationChannelId: 'com.ryanheise.myapp.channel.audio',
+        androidNotificationChannelName: 'Audio Playback',
+         androidNotificationIcon: 'mipmap/icon_transparent', // Request focus
+        androidNotificationOngoing: true,
+      ),
+    );
+}
 

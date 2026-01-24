@@ -31,8 +31,9 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
     super.initState();
 
     //AudioCubit.get(context).player.positionStream.listen((position) {
-    (AudioCubit.get(context).audioHandler as AudioPlayerHandler).getPlayer().positionStream.listen((position) {
-      if(mounted)
+    if(audioHandler != null){
+      (audioHandler as AudioPlayerHandler).getPlayer().positionStream.listen((position) {
+        if(mounted)
         {
           setState(() {
             if(AudioCubit.get(context).surahIndex == widget.surahModel["surahNumber"]){
@@ -41,8 +42,9 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
 
           });
         }
-    });
-    AudioCubit.get(context).startListening();
+      });
+      AudioCubit.get(context).startListening();
+    }
 
   }
 
@@ -51,236 +53,258 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[400],
-        body: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(60.r),
-                        bottomLeft: Radius.circular(60.r)),
-                  ),
-                  child: Image.asset(
-                    'assets/images/mosque.jpg',
-                    height: MediaQuery.of(context).size.height / 2,
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                IconButton(onPressed: (){
-                  Navigator.pop(context);
-                }, icon: Icon(Icons.arrow_back_rounded,color: Colors.black,size: 80.sp,)),
-              ],
-            ),
-            Expanded(
-              child: Container(
-                // height: MediaQuery.of(context).size.height/1.2,
-                padding: EdgeInsetsDirectional.all(30.sp),
-                decoration: BoxDecoration(
-                  color: Colors.grey[400],
-                  //borderRadius: BorderRadius.only(topRight: Radius.circular(60.r),topLeft: Radius.circular(60.r)),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'سورة ${widget.surahModel["surahNameArabic"]}',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 60.sp,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis
-                            )
-                          ),
+        body: BlocConsumer<AudioCubit,AudioState>(
+          listener: (context, state) {
+
+          },
+          builder: (context, state) {
+            if(audioHandler != null){
+              return Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(60.r),
+                              bottomLeft: Radius.circular(60.r)),
                         ),
-                        Text('آياتها ${QuranCubit.get(context).convertToArabicNumbers(widget.surahModel["totalAyah"].toString())}',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 60.sp,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis),
-                            ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text('الشيخ مشاري راشد العفاسي',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 60.sp,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis)),
-                        ),
-                        Icon(
-                          Icons.headphones_rounded,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                    Directionality(
-                      textDirection: TextDirection.ltr,
-                      child: Slider(
-                        min: 0,
-                        max: AudioCubit.get(context).duration.inSeconds.toDouble(),
-                        value:AudioCubit.get(context).isPlaying(widget.surahModel["surahNumber"])? AudioCubit.get(context).position.inSeconds.toDouble().clamp(0,
-                            AudioCubit.get(context).duration.inSeconds.toDouble()):0,
-                        onChanged: (value) {
-                         // AudioCubit.get(context).player.seek(Duration(seconds: value.toInt()));
-                          (AudioCubit.get(context).audioHandler as AudioPlayerHandler).getPlayer().seek(Duration(seconds: value.toInt()));
-                        },
-                        thumbColor: Colors.black,
-                        activeColor: Colors.black,
-                        inactiveColor: Colors.grey[600],
-                      ),
-                    ),
-                    // Time indicators
-                    Visibility(visible: AudioCubit.get(context).surahIndex == widget.surahModel["surahNumber"],
-                      replacement: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("00:00:00",style: TextStyle(
-                                color: Colors.blue[900]
-                            ),), // Current position
-                            Text("00:00:00"), // Total duration
-                          ],
+                        child: Image.asset(
+                          'assets/images/mosque.jpg',
+                          height: MediaQuery.of(context).size.height / 2,
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.fill,
                         ),
                       ),
-                      child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      IconButton(onPressed: (){
+                        Navigator.pop(context);
+                      }, icon: Icon(Icons.arrow_back_rounded,color: Colors.black,size: 80.sp,)),
+                    ],
+                  ),
+                  Expanded(
+                    child: Container(
+                      // height: MediaQuery.of(context).size.height/1.2,
+                      padding: EdgeInsetsDirectional.all(30.sp),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[400],
+                        //borderRadius: BorderRadius.only(topRight: Radius.circular(60.r),topLeft: Radius.circular(60.r)),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(AudioCubit.get(context).formatDuration(AudioCubit.get(context).position),style: TextStyle(
-                              color: Colors.blue[900]
-                          ),), // Current position
-                          Text(AudioCubit.get(context).formatDuration(AudioCubit.get(context).duration)), // Total duration
-                        ],
-                      ),
-                    ),),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              AudioCubit.get(context).audioStop(
-                                  getAudioURLBySurah(
-                                      widget.surahModel["surahNumber"]),
-                                  widget.surahModel["surahNumber"]);
-                            },
-                            icon: Icon(
-                              Icons.stop,
-                              color: Colors.red[700],size: 80.r,
-                            )),
-                        BlocConsumer<AudioCubit, AudioState>(
-                          listener: (context, state) {
-                           if(state is AudioPLayErrorState)
-                             {
-                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: SizedBox(height: 100.h,
-                                 child: Text('حدثت مشكلة يرجي الحاولة لاحقا',style: TextStyle(
-                                     color: Colors.white,
-                                     fontSize: 50.sp,
-                                     fontWeight: FontWeight.w600
-                                 ),
-                                   textAlign: TextAlign.center,),),
-                                 duration: Duration(seconds: 2),padding: EdgeInsetsDirectional.all(0),));
-                             }
-                          },
-                          builder: (context, state) {
-                            var cubit = AudioCubit.get(context);
-                            return IconButton(
-                                onPressed: () {
-                                  if(AudioCubit.get(context).isConnected == false && cubit.isPause == true){
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                    'سورة ${widget.surahModel["surahNameArabic"]}',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 60.sp,
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis
+                                    )
+                                ),
+                              ),
+                              Text('آياتها ${QuranCubit.get(context).convertToArabicNumbers(widget.surahModel["totalAyah"].toString())}',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 60.sp,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text('الشيخ مشاري راشد العفاسي',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 60.sp,
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis)),
+                              ),
+                              Icon(
+                                Icons.headphones_rounded,
+                                color: Colors.black,
+                              ),
+                            ],
+                          ),
+                          Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: Slider(
+                              min: 0,
+                              max: AudioCubit.get(context).duration.inSeconds.toDouble(),
+                              value:AudioCubit.get(context).isPlaying(widget.surahModel["surahNumber"])? AudioCubit.get(context).position.inSeconds.toDouble().clamp(0,
+                                  AudioCubit.get(context).duration.inSeconds.toDouble()):0,
+                              onChanged: (value) {
+                                // AudioCubit.get(context).player.seek(Duration(seconds: value.toInt()));
+                                (audioHandler as AudioPlayerHandler).getPlayer().seek(Duration(seconds: value.toInt()));
+                              },
+                              thumbColor: Colors.black,
+                              activeColor: Colors.black,
+                              inactiveColor: Colors.grey[600],
+                            ),
+                          ),
+                          // Time indicators
+                          Visibility(visible: AudioCubit.get(context).surahIndex == widget.surahModel["surahNumber"],
+                            replacement: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("00:00:00",style: TextStyle(
+                                      color: Colors.blue[900]
+                                  ),), // Current position
+                                  Text("00:00:00"), // Total duration
+                                ],
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(AudioCubit.get(context).formatDuration(AudioCubit.get(context).position),style: TextStyle(
+                                      color: Colors.blue[900]
+                                  ),), // Current position
+                                  Text(AudioCubit.get(context).formatDuration(AudioCubit.get(context).duration)), // Total duration
+                                ],
+                              ),
+                            ),),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    AudioCubit.get(context).audioStop(
+                                        getAudioURLBySurah(
+                                            widget.surahModel["surahNumber"]),
+                                        widget.surahModel["surahNumber"]);
+                                  },
+                                  icon: Icon(
+                                    Icons.stop,
+                                    color: Colors.red[700],size: 80.r,
+                                  )),
+                              BlocConsumer<AudioCubit, AudioState>(
+                                listener: (context, state) {
+                                  if(state is AudioPLayErrorState)
+                                  {
                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: SizedBox(height: 100.h,
-                                    child: Text('لا يوجد إتصال بالإنترنت',style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 50.sp,
-                                      fontWeight: FontWeight.w600
-                                    ),
-                                      textAlign: TextAlign.center,),),
+                                      child: Text('حدثت مشكلة يرجي الحاولة لاحقا',style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 50.sp,
+                                          fontWeight: FontWeight.w600
+                                      ),
+                                        textAlign: TextAlign.center,),),
                                       duration: Duration(seconds: 2),padding: EdgeInsetsDirectional.all(0),));
                                   }
-                                  if(!cubit.isPlaying(widget.surahModel["surahNumber"])){
-                                   ///When enter new screen and press play
-                                    AudioCubit.get(context).audioPlay(getAudioURLBySurah(
-                                        widget.surahModel["surahNumber"]),
-                                        widget.surahModel["surahNumber"]);
-                                    AudioCubit.get(context).updateLoading();
-                                  }
-                                  else if (cubit.isPause) {
-                                    ///when press play after pause 
-                                    AudioCubit.get(context).audioPlay(getAudioURLBySurah(
-                                        widget.surahModel["surahNumber"]),
-                                        widget.surahModel["surahNumber"]);
-                                  } else {
-                                    ///when press pause
-                                    AudioCubit.get(context).audioResume(
-                                        widget.surahModel["surahNumber"]);
-                                  }
                                 },
-                                icon: StreamBuilder<bool>(
-                                  //stream: cubit.player.playingStream,
-                                  stream: (AudioCubit.get(context).audioHandler as AudioPlayerHandler).getPlayer().playingStream,
-                                  builder: (context, snapshot) {
-                                    if(cubit.position.inSeconds.toDouble() == cubit.duration.inSeconds.toDouble()){
-                                      cubit.audioStop(getAudioURLBySurah(widget.surahModel["surahNumber"]), widget.surahModel["surahNumber"]); //return surah index -> -1 to can start again
-                                    }
-                                    return cubit.isLoading == false?Icon(
-                                        (snapshot.data == false || !cubit.isPlaying(widget.surahModel["surahNumber"]) || cubit.surahIndex == -1)
-                                          ? Icons.play_arrow_rounded
-                                          : Icons.pause,size: 100.r,
-                                      color: Colors.blue[900],
-                                    ):SizedBox(height: 50.h,width: 50.w,
-                                        child: CircularProgressIndicator(color: Colors.blue[900],));
-                                  },
+                                builder: (context, state) {
+                                  var cubit = AudioCubit.get(context);
+                                  return IconButton(
+                                      onPressed: () {
+                                        if(AudioCubit.get(context).isConnected == false && cubit.isPause == true){
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: SizedBox(height: 100.h,
+                                            child: Text('لا يوجد إتصال بالإنترنت',style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 50.sp,
+                                                fontWeight: FontWeight.w600
+                                            ),
+                                              textAlign: TextAlign.center,),),
+                                            duration: Duration(seconds: 2),padding: EdgeInsetsDirectional.all(0),));
+                                        }
+                                        if(!cubit.isPlaying(widget.surahModel["surahNumber"])){
+                                          ///When enter new screen and press play
+                                          AudioCubit.get(context).audioPlay(getAudioURLBySurah(
+                                              widget.surahModel["surahNumber"]),
+                                              widget.surahModel["surahNumber"]);
+                                          AudioCubit.get(context).updateLoading();
+                                        }
+                                        else if (cubit.isPause) {
+                                          ///when press play after pause
+                                          AudioCubit.get(context).audioPlay(getAudioURLBySurah(
+                                              widget.surahModel["surahNumber"]),
+                                              widget.surahModel["surahNumber"]);
+                                        } else {
+                                          ///when press pause
+                                          AudioCubit.get(context).audioResume(
+                                              widget.surahModel["surahNumber"]);
+                                        }
+                                      },
+                                      icon: StreamBuilder<bool>(
+                                        //stream: cubit.player.playingStream,
+                                        stream: (audioHandler as AudioPlayerHandler).getPlayer().playingStream,
+                                        builder: (context, snapshot) {
+                                          if(cubit.position.inSeconds.toDouble() == cubit.duration.inSeconds.toDouble()){
+                                            cubit.audioStop(getAudioURLBySurah(widget.surahModel["surahNumber"]), widget.surahModel["surahNumber"]); //return surah index -> -1 to can start again
+                                          }
+                                          return cubit.isLoading == false?Icon(
+                                            (snapshot.data == false || !cubit.isPlaying(widget.surahModel["surahNumber"]) || cubit.surahIndex == -1)
+                                                ? Icons.play_arrow_rounded
+                                                : Icons.pause,size: 100.r,
+                                            color: Colors.blue[900],
+                                          ):SizedBox(height: 50.h,width: 50.w,
+                                              child: CircularProgressIndicator(color: Colors.blue[900],));
+                                        },
 
-                                ));
-                          },
-                        ),
-                        BlocBuilder<SettingsCubit,SettingsState>(
-                          builder: (context, state) {
-                          return IconButton(
-                            onPressed: () {
-                              SettingsCubit.get(context).saveSurahAudio(widget.surahModel['surahNumber']);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: SizedBox(height: 80.h,
-                                  child: Text('تم حفظ السورة',style: TextStyle(
-                                    color: Colors.white,
-                                  ),textAlign: TextAlign.center,),
-                                ),duration: Duration(seconds: 2),
-                                  backgroundColor: Colors.blueGrey[700],
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  padding: EdgeInsetsDirectional.all(0),),
-                              );
-                            },
-                            icon: SettingsCubit.get(context).isAudioSaved &&
-                                (SharedHelper.get(key: SharedKeys.audioNumber) == widget.surahModel['surahNumber'])?
-                            Icon(
-                              Icons.bookmark_rounded,
-                              color: Colors.blueGrey[900],size: 80.r
-                            ):Icon(
-                              Icons.bookmark_border_rounded,
-                              color: AppColor.black,size: 80.r
-                            ),
-                          );
-                        },)
-                      ],
+                                      ));
+                                },
+                              ),
+                              BlocBuilder<SettingsCubit,SettingsState>(
+                                builder: (context, state) {
+                                  return IconButton(
+                                    onPressed: () {
+                                      SettingsCubit.get(context).saveSurahAudio(widget.surahModel['surahNumber']);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: SizedBox(height: 80.h,
+                                          child: Text('تم حفظ السورة',style: TextStyle(
+                                            color: Colors.white,
+                                          ),textAlign: TextAlign.center,),
+                                        ),duration: Duration(seconds: 2),
+                                          backgroundColor: Colors.blueGrey[700],
+                                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                                          padding: EdgeInsetsDirectional.all(0),),
+                                      );
+                                    },
+                                    icon: SettingsCubit.get(context).isAudioSaved &&
+                                        (SharedHelper.get(key: SharedKeys.audioNumber) == widget.surahModel['surahNumber'])?
+                                    Icon(
+                                        Icons.bookmark_rounded,
+                                        color: Colors.blueGrey[900],size: 80.r
+                                    ):Icon(
+                                        Icons.bookmark_border_rounded,
+                                        color: AppColor.black,size: 80.r
+                                    ),
+                                  );
+                                },)
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
+                ],
+              );
+            }else{
+               return Center(
+                child: Text(
+                  'حدث خطأ برجاء المحاولة في وقت اخر',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 50.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-            ),
-          ],
+              );
+            }
+
+          },
+
         ),
       ),
     );
