@@ -132,10 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             cursorColor: AppColor.foregroundColor,
                             style: TextStyle(color: AppColor.black),
                           ),
+                          //El mushaf
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('اسم السورة',style: TextStyle(
+                              Text('المصحف',style: TextStyle(
                                 color: AppColor.black,
                                 fontSize: 50.sp,
                                 fontWeight: FontWeight.bold,

@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_cubit.dart';
 import 'package:rafeek_eldarb/view_model/cubit/quran_cubit/quran_state.dart';
 
+import '../../view_model/cubit/audio_cubit/audio_cubit.dart';
+
 class LayoutScreen extends StatefulWidget {
 
   const LayoutScreen({super.key});
@@ -21,6 +23,17 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
     //comment that line when debug with emulator
     QuranCubit.get(context).checkForUpdate();
+    //Init Audio Handler in main screen to avoid init it in main
+    Future.microtask(() async {
+
+        if(mounted){
+          if(AudioCubit.get(context).audioHandler == null){
+            await AudioCubit.get(context).initAudioHandler();
+          }
+
+        }
+
+    });
 
 
   }

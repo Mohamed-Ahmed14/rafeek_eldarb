@@ -32,7 +32,8 @@ class _AdaptiveBannerAdState extends State<AdaptiveBannerAd> {
     _adHeight = size.height.toDouble();
 
     _bannerAd = BannerAd(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // Ad Unit ID
+      adUnitId: 'ca-app-pub-6500299302339143/7510817485', //Ad Unit Actual
+     // adUnitId: 'ca-app-pub-3940256099942544/6300978111', // Ad Unit ID Test
       size: size,
       request: const AdRequest(),
       listener: BannerAdListener(

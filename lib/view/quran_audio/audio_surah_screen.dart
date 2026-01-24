@@ -29,8 +29,9 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     //AudioCubit.get(context).player.positionStream.listen((position) {
-    (audioHandler as AudioPlayerHandler).getPlayer().positionStream.listen((position) {
+    (AudioCubit.get(context).audioHandler as AudioPlayerHandler).getPlayer().positionStream.listen((position) {
       if(mounted)
         {
           setState(() {
@@ -88,28 +89,37 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'سورة ${widget.surahModel["surahNameArabic"]}',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 60.sp,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            'سورة ${widget.surahModel["surahNameArabic"]}',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 60.sp,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis
+                            )
+                          ),
                         ),
                         Text('آياتها ${QuranCubit.get(context).convertToArabicNumbers(widget.surahModel["totalAyah"].toString())}',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 60.sp,
-                                fontWeight: FontWeight.bold)),
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis),
+                            ),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('الشيخ مشاري راشد العفاسي',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 60.sp,
-                                fontWeight: FontWeight.bold)),
+                        Expanded(
+                          child: Text('الشيخ مشاري راشد العفاسي',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 60.sp,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.ellipsis)),
+                        ),
                         Icon(
                           Icons.headphones_rounded,
                           color: Colors.black,
@@ -125,7 +135,7 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
                             AudioCubit.get(context).duration.inSeconds.toDouble()):0,
                         onChanged: (value) {
                          // AudioCubit.get(context).player.seek(Duration(seconds: value.toInt()));
-                          (audioHandler as AudioPlayerHandler).getPlayer().seek(Duration(seconds: value.toInt()));
+                          (AudioCubit.get(context).audioHandler as AudioPlayerHandler).getPlayer().seek(Duration(seconds: value.toInt()));
                         },
                         thumbColor: Colors.black,
                         activeColor: Colors.black,
@@ -220,7 +230,7 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
                                 },
                                 icon: StreamBuilder<bool>(
                                   //stream: cubit.player.playingStream,
-                                  stream: (audioHandler as AudioPlayerHandler).getPlayer().playingStream,
+                                  stream: (AudioCubit.get(context).audioHandler as AudioPlayerHandler).getPlayer().playingStream,
                                   builder: (context, snapshot) {
                                     if(cubit.position.inSeconds.toDouble() == cubit.duration.inSeconds.toDouble()){
                                       cubit.audioStop(getAudioURLBySurah(widget.surahModel["surahNumber"]), widget.surahModel["surahNumber"]); //return surah index -> -1 to can start again

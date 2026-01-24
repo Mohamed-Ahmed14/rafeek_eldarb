@@ -259,7 +259,8 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                 )
                             ),
                             onPressed: (){
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),),);
+                              Navigator.pop(context);
+                             // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),),);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -322,7 +323,8 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
 Future<bool> _handleBack(BuildContext context) async {
   // لو عايز pop
   ChallengeCubit.get(context).getUserData();
-  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),));
+  Navigator.pop(context);
+ // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChallengeScreen(),));
 
   // لو عايز pushReplacement
   // Navigator.pushReplacement(

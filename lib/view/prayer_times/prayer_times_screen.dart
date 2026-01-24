@@ -122,6 +122,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                      SizedBox(height: 30.h,),
                      ListView.separated(
                        shrinkWrap: true,
+                       physics: NeverScrollableScrollPhysics(),
                        itemBuilder: (context, index) {
                          return PrayerTimesWidget(time: PrayerCubit.get(context).times[index],
                            prayerIndex: index,);
