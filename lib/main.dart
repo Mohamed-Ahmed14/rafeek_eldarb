@@ -1,5 +1,5 @@
 
-//import 'package:audio_service/audio_service.dart';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,10 +9,8 @@ import 'package:rafeek_eldarb/my_app.dart';
 import 'package:rafeek_eldarb/view_model/data/local/shared_helper.dart';
 import 'package:rafeek_eldarb/view_model/data/network/dio_helper.dart';
 import 'package:rafeek_eldarb/view_model/utils/audio_handler.dart';
-//import 'package:rafeek_eldarb/view_model/utils/audio_handler.dart';
 import 'package:rafeek_eldarb/view_model/utils/defaults.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:rafeek_eldarb/view_model/utils/fcm_notification.dart';
 import 'firebase_options.dart';
 
   AudioHandler? audioHandler;
@@ -58,18 +56,18 @@ Future<void> main() async{
 
 //Google ads
   await MobileAds.instance.initialize();
-  MobileAds.instance.updateRequestConfiguration(
-    RequestConfiguration(
-      // testDeviceIds: [
-      //   'b24f3852-f6ca-4a5f-8684-aecfc6f9a65d',
-      // ],
-      // tagForChildDirectedTreatment:
-      // TagForChildDirectedTreatment.yes,
-      // tagForUnderAgeOfConsent:
-      // TagForUnderAgeOfConsent.yes,
-      // maxAdContentRating: MaxAdContentRating.g,
-    ),
-  );
+  // MobileAds.instance.updateRequestConfiguration(
+  //   RequestConfiguration(
+  //     // testDeviceIds: [
+  //     //   'b24f3852-f6ca-4a5f-8684-aecfc6f9a65d',
+  //     // ],
+  //     // tagForChildDirectedTreatment:
+  //     // TagForChildDirectedTreatment.yes,
+  //     // tagForUnderAgeOfConsent:
+  //     // TagForUnderAgeOfConsent.yes,
+  //     // maxAdContentRating: MaxAdContentRating.g,
+  //   ),
+  // );
 
 
 
