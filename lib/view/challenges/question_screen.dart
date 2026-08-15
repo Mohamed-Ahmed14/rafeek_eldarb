@@ -62,7 +62,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
             centerTitle: true,
             title: Text(
-              ' التحدي 1 ',
+              ChallengeCubit.get(context).challengeModel?.category ?? 'تحدي 1',
               style: TextStyle(color: Colors.white),
             ),
           ),
